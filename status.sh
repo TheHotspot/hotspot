@@ -1,7 +1,7 @@
 #!/bin/sh
 while :;
     do clear;
-    tree -C -t --dirsfirst;
+    tree -d -C -t --dirsfirst;
     echo "";
     git status;
     git glog;
