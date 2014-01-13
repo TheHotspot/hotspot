@@ -1,0 +1,24 @@
+git:
+    acom: git commit -a -m "$argv"
+    com: git commit -m "$argv"
+    gadd: git add $argv
+    apus: git push origin master --force
+    gpus: git push origin master
+    gs: git status
+    gl: git log
+
+bash:
+    t: tree -C --dirsontop $argv
+    l: ls -la $argv
+
+bash status loop:
+    while :; do clear; tree -C -t --dirsfirst; git status; python hotspot/manage.py validate| pygmentize -l python ; sleep 5; done
+
+django:
+    manage: python manage.py $argv
+    sdb: manage syncdb; manage migrate
+    runs: manage runserver
+    val: manage validate
+
+
+modified fish_title
