@@ -2,3 +2,4 @@ django==1.4.3
 south
 django-allauth
 django-debug-toolbar
+docutils

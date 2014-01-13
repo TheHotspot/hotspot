@@ -5,6 +5,10 @@ from allauth.socialaccount.models import SocialAccount
 import hashlib
 
 class UserProfile(models.Model):
+    """
+    UserProfiles are linked one-to-one with User objects
+
+    """
     user = models.OneToOneField(User, related_name='profile')
 
     def __unicode__(self):
@@ -32,6 +36,10 @@ User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 
 class Business(models.Model):
+    """
+    Businesses are linked many-to-many with User objects
+
+    """
     name = models.CharField(max_length=100)
 
     user = models.ManyToManyField(User)
@@ -41,10 +49,14 @@ class Business(models.Model):
         return self.name
 
 class Hotspot(models.Model):
+    """
+    Hotspots are linked many-to-one with businesses
+
+    """
     name = models.CharField(max_length=100)
     business = models.ForeignKey(Business)
 
-    user = business.name
+    user = business.name # TODO: fix this so it actually returns the username of the owner
     LAT = models.FloatField()
     LNG = models.FloatField()
     description = models.CharField(max_length=1000)
@@ -54,6 +66,10 @@ class Hotspot(models.Model):
         return self.name
 
 class CheckIn(models.Model):
+    """
+    CheckIns are linked many-to-one with hotspots and many-to-one with users
+
+    """
     user = models.ForeignKey(User)
     hotspot = models.ForeignKey(Hotspot)
 

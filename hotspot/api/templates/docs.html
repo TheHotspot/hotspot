@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if request.user.is_authenticated %}Logged In{% else %}Not Logged In{% endif %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+</head>
+<body>
+<pre>
+<b>Django Hotspot API v1</b>
+HTML only, no JSON yet
+
+URLS:
+
+/                ->      this page (docs)
+
+hotspots/        ->      full listing of hotspots
+hotspot/3/       ->      details for hotspot with id=3
+hotspot/thingy/  ->      details for hotspot with name="thingy"
+
+user/            ->      details for currently logged in user
+user/2/          ->      details for user with id=2
+user/blake/      ->      details for user with username="blake"
+
+
+example access: localhost:8000/api/hotspot/3/
+
+</pre>
+</body>
+</html>

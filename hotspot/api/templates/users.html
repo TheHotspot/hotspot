@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if request.user.is_authenticated %}Logged In{% else %}Not Logged In{% endif %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+</head>
+<body>
+
+{% if users %}
+    <ul>
+    {% for user in users %}
+        <li>
+            <a href="/api/user/{{ user.id }}/">{{ user.first_name }} {{ user.last_name }}</a><br>
+            ID: {{ user.id }}<br>
+            First: {{ user.email }}<br>
+            Last: {{ user.first_name }}<br>
+            email: {{ user.last_name }}<br>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>0 Users found.</p>
+{% endif %}
+
+
+</body>
+</html>

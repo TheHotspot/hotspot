@@ -17,8 +17,11 @@ urlpatterns = patterns('',
 
 
 
-     # Full User Listing
+    # Full User Listing
     url(r'^users/$', views.get_all_users, name='users'),
+
+    # Currently logged in user
+    url(r'^user/$', views.get_current_user, name='user'),
 
     # User by ID
     url(r'^user/(?P<user_id>\d+)(/||$)', views.user_by_id, name='user'),

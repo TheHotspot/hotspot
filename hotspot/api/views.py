@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-
 from models import User
 from models import UserProfile
 from models import Business
@@ -9,7 +8,10 @@ from models import Hotspot
 from models import CheckIn
 
 def docs(request):
-    return HttpResponse("api responds with: api docs")
+    context = {}
+    return render(request, 'docs.html', context)
+
+# Hotspot Access
 
 def get_all_hotspots(request):
     hotspots = Hotspot.objects.all()
@@ -31,6 +33,14 @@ def get_all_users(request):
     context = {'users': users}
     return render(request, 'users.html', context)
 
+# User Access
+
+def get_current_user(request):
+    users = []
+    users.append(request.user)
+    context = {'users': users}
+    return render(request, 'users.html', context)
+
 def user_by_username(request, username):
     users = User.objects.filter(username=username)
     context = {'users': users}
@@ -40,5 +50,4 @@ def user_by_id(request, user_id):
     users = User.objects.filter(id=user_id)
     context = {'users': users}
     return render(request, 'users.html', context)
-
 
