@@ -8,5 +8,5 @@ while :;
     echo "";
     python manage.py validate | pygmentize -l python;
     echo "";
-    sleep 5;
+    sleep 10;
 done
