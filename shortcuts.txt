@@ -1,9 +1,9 @@
 git:
-    acom: git commit -a -m "$argv"
-    com: git commit -m "$argv"
     gadd: git add $argv
     apus: git push origin master --force
     gpus: git push origin master
+    com: git commit -m "$argv"
+    acom: git commit -a -m "$argv; apus"
     gs: git status
     gl: git log
 
