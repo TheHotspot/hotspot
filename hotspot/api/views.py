@@ -14,17 +14,31 @@ def docs(request):
 def get_all_hotspots(request):
     hotspots = Hotspot.objects.all()
     context = {'hotspots': hotspots}
-    return render(request, 'response.html', context)
+    return render(request, 'hotspots.html', context)
 
 def hotspot_by_id(request, hotspot_id):
     hotspots = Hotspot.objects.filter(id=hotspot_id)
     context = {'hotspots': hotspots}
-    return render(request, 'response.html', context)
+    return render(request, 'hotspots.html', context)
 
 def hotspot_by_name(request, hotspot_name):
     hotspots = Hotspot.objects.filter(name=hotspot_name)
     context = {'hotspots': hotspots}
-    return render(request, 'response.html', context)
+    return render(request, 'hotspots.html', context)
 
-def user(request, username):
-    return HttpResponse("api responds with: user/%s" % username)
+def get_all_users(request):
+    users = User.objects.all()
+    context = {'users': users}
+    return render(request, 'users.html', context)
+
+def user_by_username(request, username):
+    users = User.objects.filter(username=username)
+    context = {'users': users}
+    return render(request, 'users.html', context)
+
+def user_by_id(request, user_id):
+    users = User.objects.filter(id=user_id)
+    context = {'users': users}
+    return render(request, 'users.html', context)
+
+

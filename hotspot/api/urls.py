@@ -15,6 +15,14 @@ urlpatterns = patterns('',
     # Hotspot by name
     url(r'^hotspot/(?P<hotspot_name>\D.*[^/])(/||$)', views.hotspot_by_name, name='hotspot'),
 
+
+
+     # Full User Listing
+    url(r'^users/$', views.get_all_users, name='users'),
+
+    # User by ID
+    url(r'^user/(?P<user_id>\d+)(/||$)', views.user_by_id, name='user'),
+
     # User by username
-    url(r'^user/(?P<username>.*)(/||$)', views.user, name='user'),
+    url(r'^user/(?P<username>\D.*[^/])(/||$)', views.user_by_username, name='user'),
 )
