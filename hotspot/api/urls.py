@@ -3,8 +3,9 @@ from django.conf.urls import patterns, include, url
 import views
 
 urlpatterns = patterns('',
-    # TODO: eventually make this go to API docs
+    # API Documentation
     url(r'^$', views.docs, name='docs'),
+
 
     # Full Hotspot Listing
     url(r'^hotspots/$', views.get_all_hotspots, name='hotspots'),

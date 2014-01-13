@@ -2,14 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from models import User
-from models import UserProfile
 from models import Business
 from models import Hotspot
 from models import CheckIn
 
 def docs(request):
-    context = {}
-    return render(request, 'docs.html', context)
+    return render(request, 'docs.html', {})
 
 # Hotspot Access
 
