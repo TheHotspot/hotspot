@@ -3,3 +3,4 @@ south
 django-allauth
 django-debug-toolbar
 docutils
+simplejson

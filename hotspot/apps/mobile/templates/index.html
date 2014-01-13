@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotspot Home | Mobile</title>
+    <link rel="stylesheet" type="text/css" href="/static/mobile/css/style.css" />
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqBxaWVr861YPUXahCNkoLJEHznXvp7k&sensor=true">
+    </script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function initialize() {
+            var mapOptions = {
+                zoom: 12,
+                center: new google.maps.LatLng(45.5534, -122.8192)
+            };
+
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            var hotspots_dom = document.getElementsByClassName('hotspot');
+        }
+
+        function loadScript() {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&' + 'callback=initialize';
+            document.body.appendChild(script);
+        }
+
+        window.onload = loadScript;
+
+
+        json_from_django = {{ hotspots_json | safe }};
+        hotspots = JSON.parse(json_from_django);
+        console.log(str(hotspots));
+
+    </script>
+</head>
+<body>
+    <div class="body-section">
+        {% if request.user.is_authenticated %}Logged In{% else %}Not Logged In{% endif %}
+    </div>
+    <div class="body-section">
+        <div id="map-canvas"></div>
+    </div>
+    <div class="body-section">
+        Whopdedoo! Mobile device, welcome to the homepage.
+    </div>
+    {% if hotspots %}
+        {% for hotspot in hotspots %}
+            <div class="body-section hotspot">
+                <a href="/api/hotspot/{{ hotspot.id }}/" id="name">{{ hotspot.name }}</a><br>
+                ID: {{ hotspot.id }}<br>
+                User: {{ hotspot.user }}<br>
+                Latitude: <a id="LAT">{{ hotspot.LAT }}</a><br>
+                Longitude: <a id="LNG">{{ hotspot.LNG }}</a><br>
+                Description: {{ hotspot.description }}<br>
+                Logo: <img src="{{ hotspot.logo }}"\>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="body-section">0 Hotspots found.</div>
+    {% endif %}
+</body>
+</html>
