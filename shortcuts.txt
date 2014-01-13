@@ -19,6 +19,6 @@ django:
     sdb: manage syncdb; manage migrate
     runs: manage runserver
     val: manage validate
-
+    startapp: django-admin.py startapp $argv
 
 modified fish_title
