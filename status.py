@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # helpful development script for django development
 # trees current dir, shows git status and log, and validates models with a configurable refresh rate
 # clicking on the growl notifications takes you directly to the relevant file
@@ -60,10 +61,25 @@ def highlight_modified(git_status, dir_tree):
     "
     """
 
-    git_status = git_status.split("\n")
+    git_status = git_status.split("\n")[:1]
+    if git_status[0]:
+        for line in git_status:
+            line = line[10:]
+            print line
+            folders = []
+            for folder in line.split("/")[:-1]:
+                folders.append(folder)
+            print folders
 
+            for expected_depth,folder in enumerate(folders):
+                for line in dir_tree.split("\n"):
+                    depth_in_tree = len(line.replace("\xe2\x94\x9c","!").replace("\xe2\x94\x94", "!").replace("\xe2\x94\x82","!").split("!"))   # number of "│"s + "└─"s + "├"s = depth in tree
+                    if depth_in_tree == expected_depth:
+                        dir_tree = dir_tree.replace(line, line.replace(folder, "\x1b[31;1m"+folder))
+        return dir_tree
 
-    return ""
+    else:
+        return dir_tree
 
 
 last_passed=True
@@ -77,7 +93,7 @@ while True:
         if VERBOSE:
             git_status = subprocess.check_output("clear; git status -s", stderr=subprocess.STDOUT, shell=True)
             sys.stdout.write(git_status)
-            dir_tree = subprocess.check_output("tree -d -C -t --dirsfirst", stdin=None, stdout=sys.stdout, stderr=sys.stderr, shell=True)
+            dir_tree = subprocess.check_output("tree -d -C -t --dirsfirst", stderr=subprocess.STDOUT, shell=True)
             sys.stdout.write(highlight_modified(git_status, dir_tree))
             sys.stdout.write("\n")
             sys.stdout.write("\n".join(subprocess.check_output("git glog", stdin=None, stderr=sys.stderr, shell=True).split("\n")[:4]))
