@@ -1,3 +1,12 @@
+The Hotspot Social Nightlife App
+Coming soon to a city near you...
+
+Django v1.6 Python v2.7
+django-allauth
+south
+
+responsive mobile site
+
 git:  
     gadd: git add $argv  
     apus: git push origin master --force  
@@ -15,6 +24,7 @@ bash status loop:
     while :; do clear; tree -C -t --dirsfirst; git status; python hotspot/manage.py validate| pygmentize -l python ; sleep 5; done  
   
 django:  
+    ./status.py: python status monitor with growl notifications on buildfail
     manage: python manage.py $argv  
     sdb: manage syncdb; manage migrate  
     runs: manage runserver  
