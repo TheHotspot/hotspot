@@ -10,3 +10,6 @@ def index(request):
     hotspots = Hotspot.objects.all()
     context = {'hotspots': hotspots}
     return render(request, 'hotspots.html', context)
+
+def detect_mobile(request):
+    return True
