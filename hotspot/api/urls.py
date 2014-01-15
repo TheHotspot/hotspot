@@ -6,7 +6,6 @@ urlpatterns = patterns('',
     # API Documentation
     url(r'^$', views.docs, name='docs'),
 
-
     # Full Hotspot Listing
     url(r'^hotspots/$', views.get_all_hotspots, name='hotspots'),
 
