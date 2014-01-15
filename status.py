@@ -95,12 +95,13 @@ while True:
 
     if last_dir_state != current_dir_state:
         if VERBOSE:
-            git_status = subprocess.check_output("clear; git status -s", stderr=subprocess.STDOUT, shell=True)
-            sys.stdout.write(subprocess.check_output("git status", stderr=subprocess.STDOUT, shell=True))
+            git_status = subprocess.check_output("git status -s", shell=True)
+            sys.stdout.write(subprocess.check_output("clear;", shell=True))
+            sys.stdout.write(git_status)
             dir_tree = subprocess.check_output("tree -d -C -t --dirsfirst", stderr=subprocess.STDOUT, shell=True)
             sys.stdout.write(highlight_modified(git_status, dir_tree))
             sys.stdout.write("\n")
-            sys.stdout.write("\n".join(subprocess.check_output("git glog", stdin=None, stderr=sys.stderr, shell=True).split("\n")[:4]))
+            sys.stdout.write("\n".join(subprocess.check_output("git glog", stdin=None, stderr=sys.stderr, shell=True).split("\n")[:6]))
             sys.stdout.write("\n")
         sys.stdout.write("\n")
 
