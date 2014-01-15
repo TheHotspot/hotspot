@@ -1,7 +1,18 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
 body {
-    background-color: #aab;
+    background-color: #eee;
     height: 100%;
-    width: 100%;
+    font-family: sans-serif;
+}
+
+h1 {
+    font-size: 20px;
+    color: #eee;
+    display: inline;
 }
 
 ul {
@@ -16,6 +27,61 @@ li {
     padding-bottom: 15px;
 }
 
+header {
+    display: block;
+    width: 100%;
+    background-color: brown;
+    height: 2.1em;
+    padding: 10px 0px 0px 7px;
+}
+
+#device {
+    color: #ddd;
+    font-size: 20px;
+    display: inline;
+    transition: 3s ease;
+}
+
+#links {
+    display: inline;
+    float: right;
+    padding-right: 5px;
+    margin-left: -10px;
+}
+
+#login-link {
+    color: blue;
+    font-style: underline;
+}
+
+#map-canvas {
+    height: 400px;
+    width: 100%;
+}
+
+#map-border {
+    display: block;
+    width: 100%;
+    background-color: brown;
+    text-align: center;
+}
+
+#map-border a {
+    display: inline-block;
+    min-width: 240px;
+    width: 48%;
+    background-color: #e44;
+    color: #eee;
+    font-size: 1em;
+    border-radius: 5px;
+    height: 1.8em;
+    padding:3px 5px 0px px;
+    border: 1px dashed white;
+}
+
+#map-border a:hover {background-color: #f00;}
+#map-border a:active {background-color: #fbb;}
+
 .body-section {
     display: inline-block;
     border: 1px #eee dashed;
@@ -25,10 +91,91 @@ li {
     margin: 5px;
 }
 
+#promotions {
+    display: none;
+}
 
-#map-canvas {
-    height: 400px;
-    width: 100%;
-    margin: 0px;
-    padding: 0px
+@media (max-width: 25cm) and (orientation: portrait) and (max-width: 700px) {
+    body {background-color: #ccc;}
+
+    #device:after {content:":phone";}
+
+    #map-canvas {
+        height: 600px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+    }
+
+    .body-section {
+        display: inline-block;
+        border: 1px brown dashed;
+        width: 95%;
+        min-width: 200px;
+        margin: 5px;
+   }
+}
+
+@media screen and (min-width: 701px) {
+    body {background-color: #aaa;}
+    #device:after {content:":tablet";}
+
+    #map-canvas {
+        height: 500px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+    }
+
+    .body-section {
+        display: inline-block;
+        border: 1px brown dashed;
+        width: 95%;
+        min-width: 200px;
+        max-width: 30%;
+        margin: 5px;
+   }
+}
+
+@media screen and (min-width: 1200px) {
+    body {background-color: #888;}
+    #device:after {content:":desktop";}
+
+    #map-canvas {
+        margin: 0px;
+        padding: 0px;
+        height: 450px;
+        width: 75%;
+    }
+
+    #promotions {
+        display: block;
+        width: 24.9%;
+        height: 440px;
+        float: right;
+        min-width: 100px;
+        border: 0px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    #promotions li {
+        border: 1px brown dashed;
+        padding-top: 10px;
+        margin-top:15px;
+    }
+    #promotions li:hover {
+        background-color: red;
+    }
+
+    .body-section {
+        display: inline-block;
+        border: 1px brown dashed;
+        width: 95%;
+        min-width: 200px;
+        max-width: 24%;
+        margin: 5px;
+   }
 }

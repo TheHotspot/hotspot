@@ -8,18 +8,23 @@ from hotspot.api.models import CheckIn
 
 import simplejson as json
 
+device = "mobile"
+
 def index(request):
     hotspots = []
     for hotspot in Hotspot.objects.all():
         hotspots.append({
+            'id':hotspot.id,
             'name':hotspot.name,
             'LAT':hotspot.LAT,
             'LNG':hotspot.LNG,
+            'logo':hotspot.logo,
         })
 
     hotspots_json = json.dumps(hotspots)
     context = {
         'hotspots': hotspots,
         'hotspots_json': hotspots_json,
+        'device': device,
     }
     return render(request, 'index.html', context)

@@ -24,15 +24,26 @@
     </script>
 </head>
 <body>
-    <div class="body-section">
-        {% if request.user.is_authenticated %}Logged In{% else %}Not Logged In{% endif %}
+    <header>
+        <h1>HOTSPOT Beta</h1>
+        <div id="device"> {{ device }}</div>
+        <div id="links">
+            {% if request.user.is_authenticated %}
+                <a href="/api/user/{{request.user.username}}">Logged In</a>
+            {% else %}
+                <a href="/account/login" id="login-link">Log In</a>
+            {% endif %}
+        </div>
+    </header>
+    <div id="promotions">
+        <ul>
+            <li>Promotion one</li>
+            <li>Promotion two</li>
+            <li>Promotion three</li>
+        </ul>
     </div>
-    <div class="body-section">
-        <div id="map-canvas"></div>
-    </div>
-    <div class="body-section">
-        Whopdedoo! Mobile device, welcome to the homepage.
-    </div>
+    <div id="map-canvas"></div>
+    <div id="map-border"><a>Hotspots</a><a>Friends</a></div>
     {% if hotspots %}
         {% for hotspot in hotspots %}
             <div class="body-section hotspot">
