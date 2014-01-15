@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 # helpful development script for django development
 # trees current dir, shows git status and log, and validates models with a configurable refresh rate
@@ -9,7 +10,7 @@ import subprocess
 import sys
 
 AUTOCOMMIT_AFTER_PASS = True            # autocommit when validate passes after previously failing using git commit -a -m "AUTOCOMMIT: after errorfix filelocation:linenum"
-REFRESH_DELAY = 2                       # time to wait before checking code tree for changes using recently modified date
+REFRESH_DELAY = 5                       # time to wait before checking code tree for changes using recently modified date
 VERBOSE = True                        # display file tree, git status, and git log on terminal
 
 growl = gntp.notifier.GrowlNotifier( applicationName = "Django Dev", notifications = ["Django Dev"], defaultNotifications = ["Django Dev"])
@@ -63,11 +64,9 @@ def highlight_modified(git_status, dir_tree):
 
     git_status = git_status.split("\n")
     git_status[0] = git_status[0][7:]
-    print git_status
     for line in git_status:
         if line:
             line = line[3:]
-            print line
             folders = ['.']
             for folder in line.split("/")[:-1]:
                 folders.append(folder)
@@ -102,10 +101,9 @@ while True:
             sys.stdout.write("\n")
         sys.stdout.write("\n")
 
-        result = subprocess.check_output("python manage.py validate || echo '   '; exit 0;", stderr=subprocess.STDOUT, shell=True) # if validate fails, append three spaces to output (...ugh so hacky)
-
+        result = subprocess.check_output("python manage.py validate | pygmentize -l python || echo '   '; exit 0;", stderr=subprocess.STDOUT, shell=True) # if validate fails, append three spaces to output (...ugh so hacky)
+        sys.stdout.write(result)
         if result.find("   ") != -1:
-            sys.stdout.write(result)
             err_msg = "\n".join(result.split("\n")[-6:-2]).strip()
             if last_passed:
                 if err_msg.find("File") != -1:
@@ -126,7 +124,7 @@ while True:
                     commit_result = subprocess.check_output('git commit -a -m "AUTOCOMMIT: errorfix most likely for %s:%s"; exit 0' % (short_filename, linenum), stderr=subprocess.STDOUT, shell=True)
                     alert_on_pass(commit_result)
                 else:
-                    alert_on_pass()
+                    alert_on_pass
             last_passed = True
 
     last_dir_state = current_dir_state

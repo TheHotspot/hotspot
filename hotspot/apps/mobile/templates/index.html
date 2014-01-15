@@ -19,7 +19,7 @@
 
         window.onload = initialize;
 
-        var hotspots = {{ hotspots_json | safe }};
+        var hotspots = '{{ hotspots_json | safe }}';
         console.log(JSON.stringify(hotspots));
     </script>
 </head>
