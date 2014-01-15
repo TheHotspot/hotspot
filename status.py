@@ -64,22 +64,25 @@ def highlight_modified(git_status, dir_tree):
 
     git_status = git_status.split("\n")
     git_status[0] = git_status[0][7:]
+
+    dir_tree = dir_tree.split("\n")
+
     for line in git_status:
         if line:
             line = line[3:]
-            folders = ['.']
+            folders = ["."]
             for folder in line.split("/")[:-1]:
                 folders.append(folder)
 
-
-            for expected_depth,folder in enumerate(folders):
-                for line in dir_tree.split("\n"):
-                    parsed_line = line.replace("\xe2\x94\x9c","!").replace("\xe2\x94\x94", "!").replace("\xe2\x94\x82","!").replace("    ","!")  # convert all "│"s + "└─"s + "├"s to "!", one ! means layer of depth
-                    depth_in_tree = len(parsed_line.split("!"))-1
-                    if depth_in_tree == expected_depth:                                                                                          # if # of !!! before the folder name = expected depth, highlight it
-                        dir_tree = dir_tree.replace(line, line.replace(folder, "\x1b[31;1m"+folder))
-
-    return dir_tree
+            depth = 0
+            for linenum, dir_line in enumerate(dir_tree):
+                depth_in_tree = len(dir_line.replace("\xe2\x94\x9c","!").replace("\xe2\x94\x94", "!").replace("\xe2\x94\x82","!").replace("    ","!").split("!"))-1
+                if depth_in_tree <= len(folders)-1:
+                    folder = folders[depth_in_tree]
+                    if dir_line.find(folder) != -1 and depth_in_tree == depth:
+                        dir_tree[linenum] = dir_line.replace(folder, "\x1b[31;1m"+folder)
+                        depth = depth+1
+    return "\n".join(dir_tree)
 
 
 
@@ -93,7 +96,7 @@ while True:
     if last_dir_state != current_dir_state:
         if VERBOSE:
             git_status = subprocess.check_output("clear; git status -s", stderr=subprocess.STDOUT, shell=True)
-            sys.stdout.write(git_status)
+            sys.stdout.write(subprocess.check_output("git status", stderr=subprocess.STDOUT, shell=True))
             dir_tree = subprocess.check_output("tree -d -C -t --dirsfirst", stderr=subprocess.STDOUT, shell=True)
             sys.stdout.write(highlight_modified(git_status, dir_tree))
             sys.stdout.write("\n")
