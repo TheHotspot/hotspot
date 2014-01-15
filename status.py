@@ -43,7 +43,7 @@ def alert_on_pass(message="COMMIT IT"):
 
 last_failed=False
 last_state=""
-filename="None"
+short_filename="None"
 linenum=0
 while True:
     current_state = subprocess.check_output("ls -lstcR .", shell=True)
@@ -75,7 +75,7 @@ while True:
         else:
             if last_failed:
                 if AUTOCOMMIT_AFTER_PASS:
-                    commit_result = subprocess.check_output('git commit -a -m "AUTOCOMMIT: fixed last error on %s:%s"; exit 0' % (filename, linenum), stderr=subprocess.STDOUT, shell=True)
+                    commit_result = subprocess.check_output('git commit -a -m "AUTOCOMMIT: fixed last error on %s:%s"; exit 0' % (short_filename, linenum), stderr=subprocess.STDOUT, shell=True)
                     alert_on_pass(commit_result)
                 else:
                     alert_on_pass()
