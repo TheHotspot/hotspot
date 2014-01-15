@@ -7,7 +7,9 @@ from models import Hotspot
 from models import CheckIn
 
 def docs(request):
-    return render(request, 'docs.html', {})
+    version = 1
+    context = {'version': version}
+    return render(request, 'docs.html', context)
 
 # Hotspot Access
 
@@ -48,4 +50,3 @@ def user_by_id(request, user_id):
     users = User.objects.filter(id=user_id)
     context = {'users': users}
     return render(request, 'users.html', context)
-

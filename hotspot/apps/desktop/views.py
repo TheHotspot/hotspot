@@ -12,4 +12,7 @@ def index(request):
     return render(request, 'hotspots.html', context)
 
 def detect_mobile(request):
+    """
+    this does nothing
+    """
     return True
