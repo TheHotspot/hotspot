@@ -2,3 +2,4 @@
 .DS_Store
 hotspot/db-auth.txt
 db-auth.txt
+*.save

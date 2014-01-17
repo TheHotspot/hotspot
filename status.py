@@ -63,16 +63,14 @@ def highlight_modified(git_status, dir_tree):
     """
 
     git_status = git_status.split("\n")
-    git_status[0] = git_status[0][7:]
 
     dir_tree = dir_tree.split("\n")
 
     for line in git_status:
         if line:
-            line = line[3:]
             folders = ["."]
-            for folder in line.split("/")[:-1]:
-                folders.append(folder)
+            for folder in line.split(" ")[-1].split("/")[:-1]:
+                folders.append(folder.strip())
 
             depth = 0
             for linenum, dir_line in enumerate(dir_tree):
@@ -97,9 +95,10 @@ while True:
         if VERBOSE:
             git_status = subprocess.check_output("git status -s", shell=True)
             sys.stdout.write(subprocess.check_output("clear;", shell=True))
-            sys.stdout.write(git_status)
             dir_tree = subprocess.check_output("tree -d -C -t --dirsfirst", stderr=subprocess.STDOUT, shell=True)
             sys.stdout.write(highlight_modified(git_status, dir_tree))
+            sys.stdout.write("\n")
+            sys.stdout.write(git_status)
             sys.stdout.write("\n")
             sys.stdout.write("\n".join(subprocess.check_output("git glog", stdin=None, stderr=sys.stderr, shell=True).split("\n")[:6]))
             sys.stdout.write("\n")

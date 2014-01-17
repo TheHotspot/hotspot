@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% if request.user.is_authenticated %}Logged In{% else %}Not Logged In{% endif %}</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <title>Hotspots</title>
 </head>
 <body>
 
@@ -10,13 +9,13 @@
     <ul>
     {% for hotspot in hotspots %}
         <li>
-            <a href="/api/hotspot/{{ hotspot.id }}/">{{ hotspot.name }}</a><br>
+            <a href="/api/hotspot/{{hotspot.id}}/">{{hotspot.name}}</a><br>
             ID: {{ hotspot.id }}<br>
             User: {{ hotspot.user }}<br>
             Latitude: {{ hotspot.LAT }}<br>
             Longitude: {{ hotspot.LNG }}<br>
             Description: {{ hotspot.description }}<br>
-            Logo: <img src="{{ hotspot.logo }}"\>
+            Logo: <img src="{{hotspot.logo}}"\>
         </li>
     {% endfor %}
     </ul>
