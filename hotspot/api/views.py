@@ -1,10 +1,22 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from rest_framework import viewsets, serializers, permissions, renderers
+from rest_framework.decorators import link
+
 from models import User
 from models import Business
 from models import Hotspot
 from models import CheckIn
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name')
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 def docs(request):
     version = 1

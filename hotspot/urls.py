@@ -7,9 +7,9 @@ admin.autodiscover()
 import xadmin
 xadmin.autodiscover()
 
-urlpatterns = patterns('django.views.generic.simple',('^docs[^/]$', 'redirect_to', {'url': '/docs/index.html'})),
+#urlpatterns = patterns('django.views.generic.simple',('^docs[^/]$', 'redirect_to', {'url': '/docs/index.html'})),
 
-urlpatterns += patterns('',
+urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'hotspot.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
