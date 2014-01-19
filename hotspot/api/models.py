@@ -1,3 +1,8 @@
+"""
+Hotspot API v1.0  
+Nick Sweeting 2014
+"""
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
@@ -7,9 +12,17 @@ from allauth.socialaccount.models import SocialAccount
 
 import hashlib
 
+from functools import wraps
+
 epoch = timezone.make_aware(timezone.datetime.fromtimestamp(0), timezone.utc) # set time_out to epoch to indicate user is still checked in; if time_out == epoch: timezone.is_aware(time_out) == False
 
+#@sortable allows you to limit queries to the first records=# when sorted with sort_key=''
 def sortable(func):
+    """
+    Takes any QuerySet-returning-function, orders output by sort_key='', truncates to first records=#
+    e.g. User.objects.get(id=1).checkins(records=3, sort_key='time_in')
+    """
+    @wraps(func)
     def wrapper(*args, **kwargs):
         if "records" in kwargs:
             records = kwargs.pop("records")
@@ -28,20 +41,29 @@ def sortable(func):
             return func(*args, **kwargs)
     return wrapper
 
-
 class User(AbstractUser):
-    telephone = models.CharField(max_length=20, blank=True, default="")
+    """
+    User(id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, telephone)
 
-    # checkin/checkout
+    :class:`.User` extends :class:`.AbstractUser` .
+    """
+
+    telephone = models.CharField(max_length=20, blank=True, default="")
+    """ Field: Telephone Number. Defaults to None."""
+
     def checkin(self, hotspot, time_in=timezone.now(), time_out=epoch):
         """
-        checks this user into specified hotspot
+        checkin(self, hotspot, time_in=timezone.now(), time_out=epoch)
+        Checks the user into :class:`.Hotspot` at time_in= :class:`timezone.now()`, setting time_out to the unix epoch (indicating user is still checked in)
         """
         newcheckin = CheckIn(user=self, hotspot=hotspot, time_in=time_in, time_out=time_out)
         newcheckin.save()
+
     def checkout(self, checkin=None, business=None, hotspot=None, time_out=timezone.now()):
         """
-        Checks user out of a checkin, or if none specified checksout from all
+        checkout(self, checkin=None, business=None, hotspot=None, time_out=timezone.now())
+        Checks user out of checkin= :class:`.CheckIn` at time_out= :class:`timezone.now()`
+            if checkin=None, checks out from all checkins where business= :class:`.Business` and/or hotspot= :class:`.Hotspot`
         """
         if checkin:
             lastcheckins = [checkin]
@@ -53,11 +75,12 @@ class User(AbstractUser):
         for check_in in lastcheckins:
             check_in.checkout(time_out)
 
-    # Returns QuerySet of <object>s that have been checked into in the past
+    """ Returns QuerySet of <object>s that have been checked into in the past """
     @sortable
     def checkins(self, business=None, hotspot=None):
-        """checkins(self, business=None, hotspot=None, records=0, sort_key='')
-        Get all of the user's checkins, optionally filtering by hotspot and business
+        """
+        checkins(self, business=None, hotspot=None, records=0, sort_key="")
+        Returns QuerySet of :class:`.CheckIn` objects where checkin__hotspot= :class:`.Hotspot` and hotspot__business= :class:`.Business`
         """
         filterargs = {}
         filterargs["user__id"] = self.id

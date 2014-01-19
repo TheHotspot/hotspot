@@ -1,8 +1,12 @@
 django==1.4.3
+
 django-debug-toolbar
 django-xadmin
-sphinx
-decorator
-simplejson
 django-allauth
+
 south
+simplejson
+
+sphinx
+django-extensions
+graphviz
