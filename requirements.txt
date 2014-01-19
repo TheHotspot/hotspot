@@ -1,7 +1,8 @@
 django==1.4.3
 django-debug-toolbar
 django-xadmin
-docutils
+sphinx
+decorator
 simplejson
 django-allauth
 south

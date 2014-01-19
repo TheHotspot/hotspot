@@ -9,18 +9,25 @@ import hashlib
 
 epoch = timezone.make_aware(timezone.datetime.fromtimestamp(0), timezone.utc) # set time_out to epoch to indicate user is still checked in; if time_out == epoch: timezone.is_aware(time_out) == False
 
-def records(func):
-    def inner(*args, **kwargs):
+def sortable(func):
+    def wrapper(*args, **kwargs):
         if "records" in kwargs:
             records = kwargs.pop("records")
             if "sort_key" in kwargs:
                 sort_key = kwargs.pop("sort_key")
+            else:
+                sort_key = False
+        else:
+            records = False
+        if records:
+            if sort_key:
                 return func(*args, **kwargs).order_by(sort_key)[:records]
             else:
                 return func(*args, **kwargs)[:records]
         else:
             return func(*args, **kwargs)
-    return inner
+    return wrapper
+
 
 class User(AbstractUser):
     telephone = models.CharField(max_length=20, blank=True, default="")
@@ -47,9 +54,9 @@ class User(AbstractUser):
             check_in.checkout(time_out)
 
     # Returns QuerySet of <object>s that have been checked into in the past
-    @records
+    @sortable
     def checkins(self, business=None, hotspot=None):
-        """
+        """checkins(self, business=None, hotspot=None, records=0, sort_key='')
         Get all of the user's checkins, optionally filtering by hotspot and business
         """
         filterargs = {}
@@ -63,7 +70,7 @@ class User(AbstractUser):
         checkins = CheckIn.objects.filter(**filterargs)
         return checkins
 
-    @records
+    @sortable
     def hotspots_visited(self, business=None, hotspot=None):
         """
         Get all of the hotspots the user has visited, optionally filtering by business
@@ -79,7 +86,7 @@ class User(AbstractUser):
         hotspots = Hotspot.objects.filter(**filterargs).distinct()
         return hotspots
 
-    @records
+    @sortable
     def businesses_visited(self, business=None):
         """
         Get all of the businesses whos hotspots the user has checked into
@@ -94,7 +101,7 @@ class User(AbstractUser):
         return businesses
 
     # Returns QuerySet of <object>s that are currently checked into
-    @records
+    @sortable
     def checkins_checkedin(self, business=None, hotspot=None):
         """
         returns checkins that havent been checked out
@@ -106,7 +113,7 @@ class User(AbstractUser):
         checkins = self.checkins(business=business, hotspot=hotspot).filter(**filterargs)
         return checkins
 
-    @records
+    @sortable
     def hotspots_checkedin(self, business=None, hotspot=None):
         filterargs = {}
         filterargs["checkin__time_in__lt"] = timezone.now()
@@ -115,7 +122,7 @@ class User(AbstractUser):
         hotspots = self.hotspots_visited(business=business, hotspot=hotspot).filter(**filterargs)
         return hotspots
 
-    @records
+    @sortable
     def businesses_checkedin(self, business=None):
         filterargs = {}
         filterargs["hotspot__checkin__time_in__lt"] = timezone.now()
@@ -179,7 +186,7 @@ class Business(models.Model):
         return hotspots
 
     # Return QuerySet of <object>s that have been checked into in the past
-    @records
+    @sortable
     def checkins(self, user=None, hotspot=None, records=0):
         """
         return all checkins to hotspots belonging to this business, optionally filtering by hotspot and user
@@ -197,7 +204,7 @@ class Business(models.Model):
             return checkins.order_by('time_in')[:records]
         return checkins
 
-    @records
+    @sortable
     def users_visited(self, user=None, hotspot=None):
         """
         return all users who have checked into hotspots belonging to this business
@@ -213,7 +220,7 @@ class Business(models.Model):
         users = User.objects.filter(**filterargs).distinct()
         return users
 
-    @records
+    @sortable
     def hotspots_visited(self, user=None, hotspot=None):
         """
         return all hotspots that have been checked into, optionally filtering by user
@@ -231,7 +238,7 @@ class Business(models.Model):
         return hotspots
 
     # Return QuerySet of <object>s that are currently checked into
-    @records
+    @sortable
     def checkins_checkedin(self, user=None, hotspot=None):
         """
         returns checkins that havent been checkedout (should only match current checkins), filter by user for >>>if business.checked_in(user):
@@ -243,7 +250,7 @@ class Business(models.Model):
         checkins = self.checkins(user=user, hotspot=hotspot).filter(**filterargs)
         return checkins
 
-    @records
+    @sortable
     def users_checkedin(self, user=None, hotspot=None):
         """
         returns users who are currently checked in to a hotspot belonging to this business, optionally filtering by hotspot and user
@@ -255,7 +262,7 @@ class Business(models.Model):
         users = self.users_visited(user=user, hotspot=hotspot).filter(**filterargs)
         return users
 
-    @records
+    @sortable
     def hotspots_checkedin(self, user=None, hotspot=None):
         """
         returns currently checked in users, optionally filtering by hotspot and user
@@ -319,7 +326,7 @@ class Hotspot(models.Model):
             checkin.checkout(time_out)
 
     # Gets QuerySet of <object>s that have been checked into this hotspot in the past
-    @records
+    @sortable
     def checkins(self, user=None, records=0):
         """
         return all checkins to this hotspot, optionally filtering by user
@@ -334,7 +341,7 @@ class Hotspot(models.Model):
             return checkins.order_by('time_in')[:records]
         return checkins
 
-    @records
+    @sortable
     def users_visited(self, user=None):
         """
         return all users who have checked into hotspots belonging to this business
@@ -349,7 +356,7 @@ class Hotspot(models.Model):
         return users
 
     # Gets QuerySet of <object>s that are currently checked into this hotspot
-    @records
+    @sortable
     def checkins_checkedin(self, user=None):
         """
         returns checkins that havent been checkedout (should only match current checkins), filter by user for >>>if business.checked_in(user):
@@ -361,7 +368,7 @@ class Hotspot(models.Model):
         checkins = self.checkins(user=user).filter(**filterargs)
         return checkins
 
-    @records
+    @sortable
     def users_checkedin(self, user=None):
         """
         returns users who are currently checked in to a hotspot belonging to this business, optionally filtering by hotspot and user
@@ -388,7 +395,7 @@ class Hotspot(models.Model):
 
 class CheckIn(models.Model):
     """
-    CheckIns are linked many-to-one with :model:`api.hotspot` and many-to-one with :model:`api.User`
+    CheckIns are linked many-to-one with model:`Hotspot` and many-to-one with model:`User`
 
     """
     user = models.ForeignKey(User)
