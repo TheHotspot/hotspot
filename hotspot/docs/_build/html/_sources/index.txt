@@ -1,0 +1,24 @@
+Models
+======
+
+.. toctree::
+   :maxdepth: 2
+
+   user.txt
+   business.txt
+   hotspot.txt
+   checkin.txt
+   api.txt
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+
+Graph
+=====
+
+.. graphviz:: full.dot

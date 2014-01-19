@@ -1,0 +1,9 @@
+User Class
+==========
+
+.. autoclass:: api.models.User
+    :members:
+    :noindex:
+    :undoc-members:
+
+.. graphviz:: api.dot

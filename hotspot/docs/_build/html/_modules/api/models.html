@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>api.models &mdash; Hotspot 1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Hotspot 1 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="../../_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Hotspot 1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for api.models</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Hotspot API v1.0</span>
+<span class="sd">Nick Sweeting 2014</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">AbstractUser</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+
+<span class="kn">from</span> <span class="nn">allauth.account.models</span> <span class="kn">import</span> <span class="n">EmailAddress</span>
+<span class="kn">from</span> <span class="nn">allauth.socialaccount.models</span> <span class="kn">import</span> <span class="n">SocialAccount</span>
+
+<span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="n">epoch</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">make_aware</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span> <span class="c"># set time_out to epoch to indicate user is still checked in; if time_out == epoch: timezone.is_aware(time_out) == False</span>
+
+<span class="c">#@sortable allows you to limit queries to the first records=# when sorted with sort_key=&#39;&#39;</span>
+<div class="viewcode-block" id="sortable"><a class="viewcode-back" href="../../api.html#api.models.sortable">[docs]</a><span class="k">def</span> <span class="nf">sortable</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&quot;records&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">records</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;records&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s">&quot;sort_key&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="n">sort_key</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;sort_key&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sort_key</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">records</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="n">records</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sort_key</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">sort_key</span><span class="p">)[:</span><span class="n">records</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)[:</span><span class="n">records</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</div>
+<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../user.html#api.models.User">[docs]</a><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">AbstractUser</span><span class="p">):</span>
+    <span class="n">telephone</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c"># checkin/checkout</span>
+<div class="viewcode-block" id="User.checkin"><a class="viewcode-back" href="../../user.html#api.models.User.checkin">[docs]</a>    <span class="k">def</span> <span class="nf">checkin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hotspot</span><span class="p">,</span> <span class="n">time_in</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">time_out</span><span class="o">=</span><span class="n">epoch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks the user in</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">newcheckin</span> <span class="o">=</span> <span class="n">CheckIn</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">,</span> <span class="n">time_in</span><span class="o">=</span><span class="n">time_in</span><span class="p">,</span> <span class="n">time_out</span><span class="o">=</span><span class="n">time_out</span><span class="p">)</span>
+        <span class="n">newcheckin</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="User.checkout"><a class="viewcode-back" href="../../user.html#api.models.User.checkout">[docs]</a>    <span class="k">def</span> <span class="nf">checkout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">business</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">time_out</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks user out of a checkin, or if none specified checksout from all</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">checkin</span><span class="p">:</span>
+            <span class="n">lastcheckins</span> <span class="o">=</span> <span class="p">[</span><span class="n">checkin</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">hotspot</span> <span class="ow">or</span> <span class="n">business</span><span class="p">:</span>
+            <span class="n">lastcheckins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins</span><span class="p">(</span><span class="n">business</span><span class="o">=</span><span class="n">business</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;time_in&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lastcheckins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins</span><span class="p">()</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;time_in&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">check_in</span> <span class="ow">in</span> <span class="n">lastcheckins</span><span class="p">:</span>
+            <span class="n">check_in</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">time_out</span><span class="p">)</span>
+
+    <span class="c"># Returns QuerySet of &lt;object&gt;s that have been checked into in the past</span></div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="User.checkins"><a class="viewcode-back" href="../../user.html#api.models.User.checkins">[docs]</a>    <span class="k">def</span> <span class="nf">checkins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">business</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        CHECKINS HEHEHEHEHEHEH</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;user__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="k">if</span> <span class="n">hotspot</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;hotspot__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hotspot__id</span>
+        <span class="k">if</span> <span class="n">business</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;hotspot__business__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">business</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="n">checkins</span> <span class="o">=</span> <span class="n">CheckIn</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">checkins</span>
+</div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="User.hotspots_visited"><a class="viewcode-back" href="../../user.html#api.models.User.hotspots_visited">[docs]</a>    <span class="k">def</span> <span class="nf">hotspots_visited</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">business</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all of the hotspots the user has visited, optionally filtering by business</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__user__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="k">if</span> <span class="n">business</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;business__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">business</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">if</span> <span class="n">hotspot</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hotspot</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="n">hotspots</span> <span class="o">=</span> <span class="n">Hotspot</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">hotspots</span>
+</div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="User.businesses_visited"><a class="viewcode-back" href="../../user.html#api.models.User.businesses_visited">[docs]</a>    <span class="k">def</span> <span class="nf">businesses_visited</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">business</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all of the businesses whos hotspots the user has checked into</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;hotspot__checkin__user__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="k">if</span> <span class="n">business</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">business</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="n">businesses</span> <span class="o">=</span> <span class="n">Business</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">businesses</span>
+
+    <span class="c"># Returns QuerySet of &lt;object&gt;s that are currently checked into</span></div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="User.checkins_checkedin"><a class="viewcode-back" href="../../user.html#api.models.User.checkins_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">checkins_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">business</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns checkins that havent been checked out</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;time_in__lt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span>
+
+        <span class="n">checkins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins</span><span class="p">(</span><span class="n">business</span><span class="o">=</span><span class="n">business</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">checkins</span>
+</div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="User.hotspots_checkedin"><a class="viewcode-back" href="../../user.html#api.models.User.hotspots_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">hotspots_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">business</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__time_in__lt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span>
+
+        <span class="n">hotspots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hotspots_visited</span><span class="p">(</span><span class="n">business</span><span class="o">=</span><span class="n">business</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hotspots</span>
+</div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="User.businesses_checkedin"><a class="viewcode-back" href="../../user.html#api.models.User.businesses_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">businesses_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">business</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;hotspot__checkin__time_in__lt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;hotspot__checkin__time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span>
+
+        <span class="n">businesses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">businesses_visited</span><span class="p">(</span><span class="n">business</span><span class="o">=</span><span class="n">business</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">businesses</span>
+
+    <span class="c"># Gets Bool of state</span></div>
+<div class="viewcode-block" id="User.is_checkedin"><a class="viewcode-back" href="../../user.html#api.models.User.is_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">is_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">business</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns true if user is checked into business</span>
+<span class="sd">        returns true if user is checked into hotspot</span>
+<span class="sd">        returns true if user is checked into any hotspot</span>
+<span class="sd">        returns true if user is checked into any business</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">checkin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins_checkedin</span><span class="p">(</span><span class="n">business</span><span class="o">=</span><span class="n">business</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">checkin</span><span class="o">.</span><span class="n">is_checkedin</span><span class="p">():</span>
+                <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c"># Formatters</span></div>
+<div class="viewcode-block" id="User.checkins_recent"><a class="viewcode-back" href="../../user.html#api.models.User.checkins_recent">[docs]</a>    <span class="k">def</span> <span class="nf">checkins_recent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">business</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">records</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s">&#39;time_in&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins</span><span class="p">(</span><span class="n">business</span><span class="o">=</span><span class="n">business</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">,</span> <span class="n">records</span><span class="o">=</span><span class="n">records</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="Business"><a class="viewcode-back" href="../../business.html#api.models.Business">[docs]</a><span class="k">class</span> <span class="nc">Business</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Businesses are linked many-to-many with User objects</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">logo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">admins</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c"># Python 3: def __str__(self):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="c"># checkin/checkout</span>
+<div class="viewcode-block" id="Business.checkout"><a class="viewcode-back" href="../../business.html#api.models.Business.checkout">[docs]</a>    <span class="k">def</span> <span class="nf">checkout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">time_out</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks out user from all hotspots or hotspot in this business</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">checkin</span> <span class="ow">in</span> <span class="n">checkins_checkedin</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">):</span>
+            <span class="n">checkin</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">time_out</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Business.checkout_all"><a class="viewcode-back" href="../../business.html#api.models.Business.checkout_all">[docs]</a>    <span class="k">def</span> <span class="nf">checkout_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">time_out</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks out all users from all hotspots or hotspot in this business</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">checkin</span> <span class="ow">in</span> <span class="n">checkins_checkedin</span><span class="p">(</span><span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">):</span>
+            <span class="n">checkin</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">time_out</span><span class="p">)</span>
+
+    <span class="c"># Return QuerySet of child &lt;Hotspot&gt;s</span></div>
+<div class="viewcode-block" id="Business.hotspots"><a class="viewcode-back" href="../../business.html#api.models.Business.hotspots">[docs]</a>    <span class="k">def</span> <span class="nf">hotspots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return all hotspots belonging to this business</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;business__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="n">hotspots</span> <span class="o">=</span> <span class="n">Hotspot</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hotspots</span>
+
+    <span class="c"># Return QuerySet of &lt;object&gt;s that have been checked into in the past</span></div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="Business.checkins"><a class="viewcode-back" href="../../business.html#api.models.Business.checkins">[docs]</a>    <span class="k">def</span> <span class="nf">checkins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">records</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return all checkins to hotspots belonging to this business, optionally filtering by hotspot and user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;hotspot__business__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;user__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">if</span> <span class="n">hotspot</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;hotspot__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hotspot</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="n">checkins</span> <span class="o">=</span> <span class="n">CheckIn</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">records</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">checkins</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;time_in&#39;</span><span class="p">)[:</span><span class="n">records</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">checkins</span>
+</div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="Business.users_visited"><a class="viewcode-back" href="../../business.html#api.models.Business.users_visited">[docs]</a>    <span class="k">def</span> <span class="nf">users_visited</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return all users who have checked into hotspots belonging to this business</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__hotspot__business__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">if</span> <span class="n">hotspot</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__hotspot__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hotspot</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">users</span>
+</div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="Business.hotspots_visited"><a class="viewcode-back" href="../../business.html#api.models.Business.hotspots_visited">[docs]</a>    <span class="k">def</span> <span class="nf">hotspots_visited</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return all hotspots that have been checked into, optionally filtering by user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;business__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__hotspot__business__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>  <span class="c"># only matches hotspots that have been visited</span>
+
+        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__user__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+        <span class="k">if</span> <span class="n">hotspot</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hotspot</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="n">hotspots</span> <span class="o">=</span> <span class="n">Hotspot</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">hotspots</span>
+
+    <span class="c"># Return QuerySet of &lt;object&gt;s that are currently checked into</span></div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="Business.checkins_checkedin"><a class="viewcode-back" href="../../business.html#api.models.Business.checkins_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">checkins_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns checkins that havent been checkedout (should only match current checkins), filter by user for &gt;&gt;&gt;if business.checked_in(user):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;time_in__lt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span>
+
+        <span class="n">checkins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">checkins</span>
+</div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="Business.users_checkedin"><a class="viewcode-back" href="../../business.html#api.models.Business.users_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">users_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns users who are currently checked in to a hotspot belonging to this business, optionally filtering by hotspot and user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__time_in__lt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span>
+
+        <span class="n">users</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">users_visited</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">users</span>
+</div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="Business.hotspots_checkedin"><a class="viewcode-back" href="../../business.html#api.models.Business.hotspots_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">hotspots_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns currently checked in users, optionally filtering by hotspot and user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__time_in__lt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span>
+
+        <span class="n">hotspots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hotspots_visited</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hotspots</span>
+
+    <span class="c"># Retrun Bool of state</span></div>
+<div class="viewcode-block" id="Business.is_checkedin"><a class="viewcode-back" href="../../business.html#api.models.Business.is_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">is_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns true if any user is checked into any hotspot</span>
+<span class="sd">        returns true if any user is checked into hotspot</span>
+<span class="sd">        returns true if user is checked into any hotspot</span>
+<span class="sd">        returns true if user is checked into hotspot</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">checkin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins_checkedin</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="n">hotspot</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">checkin</span><span class="o">.</span><span class="n">is_checkedin</span><span class="p">():</span>
+                <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c"># Formatters</span></div>
+<div class="viewcode-block" id="Business.checkins_recent"><a class="viewcode-back" href="../../business.html#api.models.Business.checkins_recent">[docs]</a>    <span class="k">def</span> <span class="nf">checkins_recent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">records</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">records</span><span class="o">=</span><span class="n">records</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="Hotspot"><a class="viewcode-back" href="../../hotspot.html#api.models.Hotspot">[docs]</a><span class="k">class</span> <span class="nc">Hotspot</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Hotspots are linked many-to-one with businesses</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">business</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Business</span><span class="p">)</span>
+    <span class="n">LAT</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">()</span>
+    <span class="n">LNG</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">()</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">logo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c"># Python 3: def __str__(self):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="c"># setters</span>
+<div class="viewcode-block" id="Hotspot.checkin"><a class="viewcode-back" href="../../hotspot.html#api.models.Hotspot.checkin">[docs]</a>    <span class="k">def</span> <span class="nf">checkin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">time_in</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">time_out</span><span class="o">=</span><span class="n">epoch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        check into this hotspot with specified user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">User</span><span class="o">.</span><span class="n">CheckIn</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">hotspot</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_in</span><span class="o">=</span><span class="n">time_in</span><span class="p">,</span><span class="n">time_out</span><span class="o">=</span><span class="n">time_out</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Hotspot.checkout"><a class="viewcode-back" href="../../hotspot.html#api.models.Hotspot.checkout">[docs]</a>    <span class="k">def</span> <span class="nf">checkout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">time_out</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks out user from this hotspot</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">checkin</span> <span class="ow">in</span> <span class="n">checkins_checkedin</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">):</span>
+            <span class="n">checkin</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">time_out</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Hotspot.checkout_all"><a class="viewcode-back" href="../../hotspot.html#api.models.Hotspot.checkout_all">[docs]</a>    <span class="k">def</span> <span class="nf">checkout_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_out</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks out all users from this hotspot</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">checkin</span> <span class="ow">in</span> <span class="n">checkins_checkedin</span><span class="p">():</span>
+            <span class="n">checkin</span><span class="o">.</span><span class="n">checkout</span><span class="p">(</span><span class="n">time_out</span><span class="p">)</span>
+
+    <span class="c"># Gets QuerySet of &lt;object&gt;s that have been checked into this hotspot in the past</span></div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="Hotspot.checkins"><a class="viewcode-back" href="../../hotspot.html#api.models.Hotspot.checkins">[docs]</a>    <span class="k">def</span> <span class="nf">checkins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">records</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return all checkins to this hotspot, optionally filtering by user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;user__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="n">checkins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkin_set</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">records</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">checkins</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;time_in&#39;</span><span class="p">)[:</span><span class="n">records</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">checkins</span>
+</div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="Hotspot.users_visited"><a class="viewcode-back" href="../../hotspot.html#api.models.Hotspot.users_visited">[docs]</a>    <span class="k">def</span> <span class="nf">users_visited</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return all users who have checked into hotspots belonging to this business</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__hotspot__id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+            <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">users</span>
+
+    <span class="c"># Gets QuerySet of &lt;object&gt;s that are currently checked into this hotspot</span></div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="Hotspot.checkins_checkedin"><a class="viewcode-back" href="../../hotspot.html#api.models.Hotspot.checkins_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">checkins_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns checkins that havent been checkedout (should only match current checkins), filter by user for &gt;&gt;&gt;if business.checked_in(user):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;time_in__lt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span>
+
+        <span class="n">checkins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">checkins</span>
+</div>
+    <span class="nd">@sortable</span>
+<div class="viewcode-block" id="Hotspot.users_checkedin"><a class="viewcode-back" href="../../hotspot.html#api.models.Hotspot.users_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">users_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns users who are currently checked in to a hotspot belonging to this business, optionally filtering by hotspot and user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filterargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__time_in__lt&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">filterargs</span><span class="p">[</span><span class="s">&quot;checkin__time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span>
+
+        <span class="n">users</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">users_visited</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="n">filterargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">users</span>
+
+    <span class="c"># Retrun Bool of state</span></div>
+<div class="viewcode-block" id="Hotspot.is_checkedin"><a class="viewcode-back" href="../../hotspot.html#api.models.Hotspot.is_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">is_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">checkin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins_checkedin</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">checkin</span><span class="o">.</span><span class="n">is_checkedin</span><span class="p">():</span>
+                <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="c"># Formatters</span></div>
+<div class="viewcode-block" id="Hotspot.checkins_recent"><a class="viewcode-back" href="../../hotspot.html#api.models.Hotspot.checkins_recent">[docs]</a>    <span class="k">def</span> <span class="nf">checkins_recent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">records</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sort_key</span><span class="o">=</span><span class="s">&#39;time_in&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">checkins</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">records</span><span class="o">=</span><span class="n">records</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="CheckIn"><a class="viewcode-back" href="../../checkin.html#api.models.CheckIn">[docs]</a><span class="k">class</span> <span class="nc">CheckIn</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CheckIns are linked many-to-one with model:`Hotspot` and many-to-one with model:`User`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+    <span class="n">hotspot</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Hotspot</span><span class="p">)</span>
+    <span class="n">time_in</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="s">&#39;time in&#39;</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+    <span class="n">time_out</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="s">&#39;time out&#39;</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c"># Python 3: def __str__(self):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">()</span><span class="o">+</span><span class="s">&quot; @ &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hotspot</span><span class="p">)</span>
+
+    <span class="c"># setters</span>
+<div class="viewcode-block" id="CheckIn.checkout"><a class="viewcode-back" href="../../checkin.html#api.models.CheckIn.checkout">[docs]</a>    <span class="k">def</span> <span class="nf">checkout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_out</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_out</span> <span class="o">=</span> <span class="n">time_out</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="CheckIn.length"><a class="viewcode-back" href="../../checkin.html#api.models.CheckIn.length">[docs]</a>    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns length of time user spent checked in (timedelta)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_checkedin</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">time_in</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_out</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">time_in</span>
+
+    <span class="c"># status</span></div>
+<div class="viewcode-block" id="CheckIn.is_checkedin"><a class="viewcode-back" href="../../checkin.html#api.models.CheckIn.is_checkedin">[docs]</a>    <span class="k">def</span> <span class="nf">is_checkedin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns true if checkin hasnt been checked out</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_in</span> <span class="o">&lt;</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_out</span> <span class="o">==</span> <span class="n">epoch</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Hotspot 1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Nick Sweeting.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.Theme by <a href="http://github.com/vkvn">vkvn</a>
+    </div>
+  </body>
+</html>

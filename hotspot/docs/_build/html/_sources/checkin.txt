@@ -1,0 +1,9 @@
+CheckIn Class
+=============
+
+.. autoclass:: api.models.CheckIn
+    :members:
+    :noindex:
+    :undoc-members:
+
+.. graphviz:: api.dot

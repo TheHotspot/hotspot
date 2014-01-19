@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Models &mdash; Hotspot 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Hotspot 1 documentation" href="#" />
+    <link rel="next" title="User Class" href="user.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="user.html" title="User Class"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">Hotspot 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Models</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#graph">Graph</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="user.html"
+                        title="next chapter">User Class</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="models">
+<h1>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user.html">User Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="business.html">Business Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hotspot.html">Hotspot Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="checkin.html">CheckIn Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Full API</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+<div class="section" id="graph">
+<h1>Graph<a class="headerlink" href="#graph" title="Permalink to this headline">¶</a></h1>
+<p class="graphviz">
+<img src="_images/graphviz-d92945eb2bd4ae5878e53b4a5b161297c94c0815.png" alt="digraph model_graph {
+  # Dotfile by Django-Extensions graph_models
+  # Created: 2014-01-19 03:13
+  # Cli Options: -a -g
+
+  fontname = &quot;Helvetica&quot;
+  fontsize = 8
+  splines  = true
+
+  node [
+    fontname = &quot;Helvetica&quot;
+    fontsize = 8
+    shape = &quot;plaintext&quot;
+  ]
+
+  edge [
+    fontname = &quot;Helvetica&quot;
+    fontsize = 8
+  ]
+
+  # Labels
+  subgraph cluster_django_contrib_auth_models {
+    label=&lt;
+          &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+          &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot;&gt;
+          &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;Black&quot; POINT-SIZE=&quot;12&quot;&gt;
+          django.contrib.auth
+          &lt;/FONT&gt;
+          &lt;/TD&gt;&lt;/TR&gt;
+          &lt;/TABLE&gt;
+          &gt;
+    color=olivedrab4
+    style=&quot;rounded&quot;
+  
+    django_contrib_auth_models_Permission [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      Permission
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;content_type&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;codename&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+  
+    django_contrib_auth_models_Group [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      Group
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+
+  }
+  subgraph cluster_django_contrib_sites_models {
+    label=&lt;
+          &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+          &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot;&gt;
+          &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;Black&quot; POINT-SIZE=&quot;12&quot;&gt;
+          django.contrib.sites
+          &lt;/FONT&gt;
+          &lt;/TD&gt;&lt;/TR&gt;
+          &lt;/TABLE&gt;
+          &gt;
+    color=olivedrab4
+    style=&quot;rounded&quot;
+  
+    django_contrib_sites_models_Site [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      Site
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;domain&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+
+  }
+  subgraph cluster_django_contrib_contenttypes_models {
+    label=&lt;
+          &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+          &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot;&gt;
+          &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;Black&quot; POINT-SIZE=&quot;12&quot;&gt;
+          django.contrib.contenttypes
+          &lt;/FONT&gt;
+          &lt;/TD&gt;&lt;/TR&gt;
+          &lt;/TABLE&gt;
+          &gt;
+    color=olivedrab4
+    style=&quot;rounded&quot;
+  
+    django_contrib_contenttypes_models_ContentType [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      ContentType
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;app_label&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;model&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+
+  }
+  subgraph cluster_django_contrib_sessions_models {
+    label=&lt;
+          &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+          &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot;&gt;
+          &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;Black&quot; POINT-SIZE=&quot;12&quot;&gt;
+          django.contrib.sessions
+          &lt;/FONT&gt;
+          &lt;/TD&gt;&lt;/TR&gt;
+          &lt;/TABLE&gt;
+          &gt;
+    color=olivedrab4
+    style=&quot;rounded&quot;
+  
+    django_contrib_sessions_models_Session [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      Session
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;session_key&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;expire_date&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;session_data&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;TextField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+
+  }
+  subgraph cluster_django_contrib_admin_models {
+    label=&lt;
+          &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+          &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot;&gt;
+          &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;Black&quot; POINT-SIZE=&quot;12&quot;&gt;
+          django.contrib.admin
+          &lt;/FONT&gt;
+          &lt;/TD&gt;&lt;/TR&gt;
+          &lt;/TABLE&gt;
+          &gt;
+    color=olivedrab4
+    style=&quot;rounded&quot;
+  
+    django_contrib_admin_models_LogEntry [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      LogEntry
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Bold&quot;&gt;content_type&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;user&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;action_flag&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;PositiveSmallIntegerField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;action_time&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;change_message&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;TextField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;object_id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;TextField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;object_repr&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+
+  }
+  subgraph cluster_allauth_account_models {
+    label=&lt;
+          &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+          &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot;&gt;
+          &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;Black&quot; POINT-SIZE=&quot;12&quot;&gt;
+          allauth.account
+          &lt;/FONT&gt;
+          &lt;/TD&gt;&lt;/TR&gt;
+          &lt;/TABLE&gt;
+          &gt;
+    color=olivedrab4
+    style=&quot;rounded&quot;
+  
+    allauth_account_models_EmailAddress [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      EmailAddress
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;user&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;email&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;EmailField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;primary&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;BooleanField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;verified&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;BooleanField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+  
+    allauth_account_models_EmailConfirmation [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      EmailConfirmation
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;email_address&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;created&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;key&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;sent&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+
+  }
+  subgraph cluster_allauth_socialaccount_models {
+    label=&lt;
+          &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+          &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot;&gt;
+          &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;Black&quot; POINT-SIZE=&quot;12&quot;&gt;
+          allauth.socialaccount
+          &lt;/FONT&gt;
+          &lt;/TD&gt;&lt;/TR&gt;
+          &lt;/TABLE&gt;
+          &gt;
+    color=olivedrab4
+    style=&quot;rounded&quot;
+  
+    allauth_socialaccount_models_SocialApp [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      SocialApp
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;client_id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;key&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;provider&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;secret&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+  
+    allauth_socialaccount_models_SocialAccount [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      SocialAccount
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;user&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;date_joined&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;extra_data&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;JSONField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;last_login&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;provider&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;uid&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+  
+    allauth_socialaccount_models_SocialToken [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      SocialToken
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;account&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;app&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;expires_at&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;token&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;TextField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;token_secret&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+
+  }
+  subgraph cluster_south_models {
+    label=&lt;
+          &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+          &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot;&gt;
+          &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;Black&quot; POINT-SIZE=&quot;12&quot;&gt;
+          south
+          &lt;/FONT&gt;
+          &lt;/TD&gt;&lt;/TR&gt;
+          &lt;/TABLE&gt;
+          &gt;
+    color=olivedrab4
+    style=&quot;rounded&quot;
+  
+    south_models_MigrationHistory [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      MigrationHistory
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;app_name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;applied&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;migration&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+
+  }
+  subgraph cluster_hotspot_api_models {
+    label=&lt;
+          &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+          &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot;&gt;
+          &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;Black&quot; POINT-SIZE=&quot;12&quot;&gt;
+          hotspot.api
+          &lt;/FONT&gt;
+          &lt;/TD&gt;&lt;/TR&gt;
+          &lt;/TABLE&gt;
+          &gt;
+    color=olivedrab4
+    style=&quot;rounded&quot;
+  
+    django_contrib_auth_models_AbstractUser [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      AbstractUser&lt;BR/&gt;&amp;lt;&lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;AbstractBaseUser,PermissionsMixin&lt;/FONT&gt;&amp;gt;
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;date_joined&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;email&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;EmailField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;first_name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;is_active&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;BooleanField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;is_staff&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;BooleanField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;is_superuser&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;BooleanField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;last_login&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;last_name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;password&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;username&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+  
+    hotspot_api_models_User [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      User&lt;BR/&gt;&amp;lt;&lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;AbstractUser&lt;/FONT&gt;&amp;gt;
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;date_joined&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;email&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;EmailField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;first_name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;is_active&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;BooleanField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;is_staff&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;BooleanField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;is_superuser&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;BooleanField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;last_login&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;last_name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Italic&quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;password&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;telephone&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;username&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Italic&quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+  
+    hotspot_api_models_Business [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      Business
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;logo&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+  
+    hotspot_api_models_Hotspot [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      Hotspot
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;business&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;LAT&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;FloatField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;LNG&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;FloatField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;description&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;logo&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+  
+    hotspot_api_models_CheckIn [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      CheckIn
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;hotspot&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;user&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;time_in&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;time_out&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;DateTimeField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+
+  }
+  subgraph cluster_xadmin_models {
+    label=&lt;
+          &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+          &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot;&gt;
+          &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;Black&quot; POINT-SIZE=&quot;12&quot;&gt;
+          xadmin
+          &lt;/FONT&gt;
+          &lt;/TD&gt;&lt;/TR&gt;
+          &lt;/TABLE&gt;
+          &gt;
+    color=olivedrab4
+    style=&quot;rounded&quot;
+  
+    xadmin_models_Bookmark [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      Bookmark
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;content_type&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Bold&quot;&gt;user&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;is_share&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;BooleanField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;query&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT COLOR=&quot;#7B7B7B&quot; FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;title&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;url_name&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+  
+    xadmin_models_UserSettings [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      UserSettings
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;user&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;key&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;value&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;TextField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+  
+    xadmin_models_UserWidget [label=&lt;
+      &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+      &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;
+      UserWidget
+      &lt;/FONT&gt;&lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;AutoField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;user&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica Bold&quot;&gt;ForeignKey (id)&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;page_id&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;value&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;TextField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;TR&gt;&lt;TD ALIGN=&quot;LEFT&quot; BORDER=&quot;0&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;widget_type&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;TD ALIGN=&quot;LEFT&quot;&gt;
+      &lt;FONT FACE=&quot;Helvetica &quot;&gt;CharField&lt;/FONT&gt;
+      &lt;/TD&gt;&lt;/TR&gt;
+    
+      &lt;/TABLE&gt;
+      &gt;]
+
+  }
+
+
+  # Relations
+
+  django_contrib_auth_models_Permission -&gt; django_contrib_contenttypes_models_ContentType
+  [label=&quot;content_type (permission)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  django_contrib_auth_models_Group -&gt; django_contrib_auth_models_Permission
+  [label=&quot;permissions (group)&quot;] [arrowhead=dot arrowtail=dot, dir=both];
+
+  django_contrib_admin_models_LogEntry -&gt; hotspot_api_models_User
+  [label=&quot;user (logentry)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  django_contrib_admin_models_LogEntry -&gt; django_contrib_contenttypes_models_ContentType
+  [label=&quot;content_type (logentry)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  allauth_account_models_EmailAddress -&gt; hotspot_api_models_User
+  [label=&quot;user (emailaddress)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  allauth_account_models_EmailConfirmation -&gt; allauth_account_models_EmailAddress
+  [label=&quot;email_address (emailconfirmation)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  allauth_socialaccount_models_SocialApp -&gt; django_contrib_sites_models_Site
+  [label=&quot;sites (socialapp)&quot;] [arrowhead=dot arrowtail=dot, dir=both];
+
+  allauth_socialaccount_models_SocialAccount -&gt; hotspot_api_models_User
+  [label=&quot;user (socialaccount)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  allauth_socialaccount_models_SocialToken -&gt; allauth_socialaccount_models_SocialApp
+  [label=&quot;app (socialtoken)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  allauth_socialaccount_models_SocialToken -&gt; allauth_socialaccount_models_SocialAccount
+  [label=&quot;account (socialtoken)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+  django_contrib_auth_models_AbstractBaseUser [label=&lt;
+  &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+  &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+  &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;AbstractBaseUser&lt;/FONT&gt;
+  &lt;/TD&gt;&lt;/TR&gt;
+  &lt;/TABLE&gt;
+  &gt;]
+  django_contrib_auth_models_AbstractUser -&gt; django_contrib_auth_models_AbstractBaseUser
+  [label=&quot;abstract\ninheritance&quot;] [arrowhead=empty, arrowtail=none, dir=both];
+  django_contrib_auth_models_PermissionsMixin [label=&lt;
+  &lt;TABLE BGCOLOR=&quot;palegoldenrod&quot; BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot;&gt;
+  &lt;TR&gt;&lt;TD COLSPAN=&quot;2&quot; CELLPADDING=&quot;4&quot; ALIGN=&quot;CENTER&quot; BGCOLOR=&quot;olivedrab4&quot;&gt;
+  &lt;FONT FACE=&quot;Helvetica Bold&quot; COLOR=&quot;white&quot;&gt;PermissionsMixin&lt;/FONT&gt;
+  &lt;/TD&gt;&lt;/TR&gt;
+  &lt;/TABLE&gt;
+  &gt;]
+  django_contrib_auth_models_AbstractUser -&gt; django_contrib_auth_models_PermissionsMixin
+  [label=&quot;abstract\ninheritance&quot;] [arrowhead=empty, arrowtail=none, dir=both];
+
+  hotspot_api_models_User -&gt; django_contrib_auth_models_Group
+  [label=&quot;groups (user)&quot;] [arrowhead=dot arrowtail=dot, dir=both];
+
+  hotspot_api_models_User -&gt; django_contrib_auth_models_Permission
+  [label=&quot;user_permissions (user)&quot;] [arrowhead=dot arrowtail=dot, dir=both];
+
+  hotspot_api_models_User -&gt; django_contrib_auth_models_AbstractUser
+  [label=&quot;abstract\ninheritance&quot;] [arrowhead=empty, arrowtail=none, dir=both];
+
+  hotspot_api_models_Business -&gt; hotspot_api_models_User
+  [label=&quot;admins (business)&quot;] [arrowhead=dot arrowtail=dot, dir=both];
+
+  hotspot_api_models_Hotspot -&gt; hotspot_api_models_Business
+  [label=&quot;business (hotspot)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  hotspot_api_models_CheckIn -&gt; hotspot_api_models_User
+  [label=&quot;user (checkin)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  hotspot_api_models_CheckIn -&gt; hotspot_api_models_Hotspot
+  [label=&quot;hotspot (checkin)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  xadmin_models_Bookmark -&gt; hotspot_api_models_User
+  [label=&quot;user (bookmark)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  xadmin_models_Bookmark -&gt; django_contrib_contenttypes_models_ContentType
+  [label=&quot;content_type (bookmark)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  xadmin_models_UserSettings -&gt; hotspot_api_models_User
+  [label=&quot;user (usersettings)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+  xadmin_models_UserWidget -&gt; hotspot_api_models_User
+  [label=&quot;user (userwidget)&quot;] [arrowhead=none, arrowtail=dot, dir=both];
+
+}" />
+</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="user.html" title="User Class"
+             >next</a> |</li>
+        <li><a href="#">Hotspot 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Nick Sweeting.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.Theme by <a href="http://github.com/vkvn">vkvn</a>
+    </div>
+  </body>
+</html>
