@@ -9,14 +9,18 @@ from models import Business
 from models import Hotspot
 from models import CheckIn
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('first_name', 'last_name')
+def GenericSerializer(imodel, ifields=('id', '__unicode__')):
+    class Serializer(serializers.HyperlinkedModelSerializer):
+        class Meta:
+            model = imodel
+            fields = ifields
+    return Serializer
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+def GenericViewSet(model, ifields=('id', '__unicode__')):
+    class ViewSet(viewsets.ModelViewSet):
+        queryset = model.objects.all()
+        serializer_class = GenericSerializer(model, ifields)
+    return ViewSet
 
 def docs(request):
     version = 1
