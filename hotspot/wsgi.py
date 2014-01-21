@@ -18,12 +18,17 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hotspot.settings")
 
 import django.views.debug
 
-def null_technical_500_response(request, exc_type, exc_value, tb):
-    raise exc_type, exc_value, tb
-django.views.debug.technical_500_response = null_technical_500_response
-
 from django.core.wsgi import get_wsgi_application
 app = get_wsgi_application()
 
-from werkzeug.debug import DebuggedApplication
-application = DebuggedApplication(app, evalex=True)
+from hotspot.settings import DEBUG
+
+if DEBUG:
+    def null_technical_500_response(request, exc_type, exc_value, tb):
+        raise exc_type, exc_value, tb
+    django.views.debug.technical_500_response = null_technical_500_response
+
+    from werkzeug.debug import DebuggedApplication
+    application = DebuggedApplication(app, evalex=True)
+else:
+    application = app
