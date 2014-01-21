@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^users/$', GenericViewSet(models.User, ('id', 'first_name', 'last_name', 'email', 'telephone')).as_view({"get": "list"}), name='user-list'),
     url(r'^hotspots/$', GenericViewSet(models.Hotspot, ('id', 'name', 'LAT', 'LNG')).as_view({"get": "list"}), name='hotspot-list'),
     url(r'^businesses/$', GenericViewSet(models.Business, ('id', 'name', 'logo')).as_view({"get": "list"}), name='business-list'),
-    url(r'^checkins/$', GenericViewSet(models.CheckIn, ('id', 'user', 'time_in', 'time_out')).as_view({"get": "list"}), name='checkin-list'),
+    url(r'^checkins/$', GenericViewSet(models.CheckIn, ('id', 'user', 'time_in')).as_view({"get": "list"}), name='checkin-list'),
 
     # # API Documentation
     # url(r'^$', views.docs, name='docs'),

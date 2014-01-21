@@ -1,9 +1,0 @@
-Business Class
-==============
-
-.. autoclass:: api.models.Business
-    :members:
-    :noindex:
-    :undoc-members:
-
-.. graphviz:: api.dot

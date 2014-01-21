@@ -1,9 +1,0 @@
-Hotspot Class
-=============
-
-.. autoclass:: api.models.Hotspot
-    :members:
-    :noindex:
-    :undoc-members:
-
-.. graphviz:: api.dot

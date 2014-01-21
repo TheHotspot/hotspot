@@ -15,9 +15,3 @@ django-werkzeug-debugger-runserver
 django-xadmin
 django-debug-toolbar
 
-
-
-
-
-
-

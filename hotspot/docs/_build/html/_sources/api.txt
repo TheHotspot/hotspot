@@ -1,8 +1,0 @@
-Full API
-========
-
-.. automodule:: api.models
-    :members:
-    :undoc-members:
-
-.. graphviz:: api.dot
