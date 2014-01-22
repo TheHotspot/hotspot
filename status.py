@@ -77,7 +77,7 @@ def highlight_modified(git_status, dir_tree):
                 depth_in_tree = len(dir_line.replace("\xe2\x94\x9c","!").replace("\xe2\x94\x94", "!").replace("\xe2\x94\x82","!").replace("    ","!").split("!"))-1
                 if depth_in_tree <= len(folders)-1:
                     folder = folders[depth_in_tree]
-                    if dir_line.find(folder) != -1 and depth_in_tree == depth:
+                    if dir_line.find(folder)+1 and depth_in_tree == depth:
                         dir_tree[linenum] = dir_line.replace(folder, "\x1b[31;1m"+folder)
                         depth = depth+1
     return "\n".join(dir_tree)
@@ -106,10 +106,10 @@ while True:
 
         result = subprocess.check_output("python manage.py validate | pygmentize -l python || echo '   '; exit 0;", stderr=subprocess.STDOUT, shell=True) # if validate fails, append three spaces to output (...ugh so hacky)
         sys.stdout.write(result)
-        if result.find("   ") != -1:
+        if result.find("   ")+1:
             err_msg = "\n".join(result.split("\n")[-6:-2]).strip()
             if last_passed:
-                if err_msg.find("File") != -1:
+                if err_msg.find("File")+1:
                     filename = err_msg.split("\"")[1]
                     short_filename = filename.split("django-hotspot")[1]
                     short_errmsg = "\n".join(err_msg.split("\n")[1:])
