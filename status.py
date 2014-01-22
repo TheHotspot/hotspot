@@ -127,7 +127,7 @@ while True:
                     commit_result = subprocess.check_output('git commit -a -m "AUTOCOMMIT: errorfix most likely for %s:%s"; exit 0' % (short_filename, linenum), stderr=subprocess.STDOUT, shell=True)
                     alert_on_pass(commit_result)
                 else:
-                    alert_on_pass
+                    alert_on_pass()
             last_passed = True
 
     last_dir_state = current_dir_state
