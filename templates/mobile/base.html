@@ -15,7 +15,7 @@
                     {% if request.user.is_authenticated %}
                         <a href="/api/user/{{request.user.username}}">Logged In</a>
                     {% else %}
-                        <a href="/account/login" id="login-link">Log In</a>
+                        <a href="/auth/login" id="login-link">Log In</a>
                     {% endif %}
                 </div>
             {% endblock topbar %}
