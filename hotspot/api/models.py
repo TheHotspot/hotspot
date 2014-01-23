@@ -323,8 +323,14 @@ class Hotspot(models.Model):
     business = models.ForeignKey(Business)
     LAT = models.FloatField()
     LNG = models.FloatField()
-    description = models.CharField(max_length=1000)
-    logo = models.CharField(max_length=100)
+
+    nickname = models.CharField(max_length=40, blank=True, default="")
+    capacity = models.IntegerField(null=True)
+
+    description = models.CharField(max_length=2000, blank=True, default="")
+    website = models.CharField(max_length=200, blank=True, default="")
+    logo = models.CharField(max_length=200, blank=True, default="")
+    telephone = models.CharField(max_length=25, blank=True, default="")
 
     def __unicode__(self):  # Python 3: def __str__(self):
         return self.name

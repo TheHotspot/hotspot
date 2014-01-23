@@ -9,7 +9,7 @@ from time import sleep
 import subprocess
 import sys
 
-AUTOCOMMIT_AFTER_PASS = True            # autocommit when validate passes after previously failing using git commit -a -m "AUTOCOMMIT: after errorfix filelocation:linenum"
+AUTOCOMMIT_AFTER_PASS = False            # autocommit when validate passes after previously failing using git commit -a -m "AUTOCOMMIT: after errorfix filelocation:linenum"
 REFRESH_DELAY = 5                       # time to wait before checking code tree for changes using recently modified date
 VERBOSE = True                        # display file tree, git status, and git log on terminal
 

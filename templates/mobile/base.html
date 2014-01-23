@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Hotspot Home | Mobile{% endblock title %}</title>
+        <link rel="stylesheet" type="text/css" href="/static/mobile/css/style.css"/>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        {% block includes %}{% endblock includes %}
+    </head>
+    <body>
+        <header>
+            {% block topbar %}
+                <h1>HOTSPOT Beta</h1>
+                <div id="device"> {{ device }}</div>
+                <div id="links">
+                    {% if request.user.is_authenticated %}
+                        <a href="/api/user/{{request.user.username}}">Logged In</a>
+                    {% else %}
+                        <a href="/account/login" id="login-link">Log In</a>
+                    {% endif %}
+                </div>
+            {% endblock topbar %}
+        </header>
+
+        <div id="content">
+            {% block content %}{% endblock content %}
+        </div>
+        {{ analytics_code }}
+        {{ uservoice_code }}
+    </body>
+</html>

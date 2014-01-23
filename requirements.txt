@@ -8,6 +8,7 @@ djangorestframework
 
 django-extensions
 graphviz
+pygraphviz
 sphinx
 south
 django-werkzeug-debugger-runserver

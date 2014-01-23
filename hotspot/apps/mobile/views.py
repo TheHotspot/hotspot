@@ -27,4 +27,4 @@ def index(request):
         'hotspots_json': hotspots_json,
         'device': device,
     }
-    return render(request, 'index.html', context)
+    return render(request, 'mobile/index.html', context)

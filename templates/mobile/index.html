@@ -1,0 +1,51 @@
+{% extends "mobile/base.html" %}
+
+    {% block title %}Hotspot Home | Mobile{% endblock title %}
+
+    {% block includes %}
+        <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqBxaWVr861YPUXahCNkoLJEHznXvp7k&sensor=true">
+        </script>
+        <script type="text/javascript">
+            function initialize() {
+                var mapOptions = {
+                    zoom: 12,
+                    center: new google.maps.LatLng(45.5534, -122.8192)
+                };
+
+                var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            }
+
+            window.onload = initialize;
+
+            var hotspots = '{{ hotspots_json | safe }}';
+            console.log(JSON.stringify(hotspots));
+        </script>
+    {% endblock includes %}
+
+    {% block content %}
+        <div id="promotions">
+            <ul>
+                <li>Promotion one</li>
+                <li>Promotion two</li>
+                <li>Promotion three</li>
+            </ul>
+        </div>
+        <div id="map-canvas"></div>
+        <div id="map-border"><a>Hotspots</a><a>Friends</a></div>
+        {% if hotspots %}
+            {% for hotspot in hotspots %}
+                <div class="body-section hotspot">
+                    <a href="/api/hotspot/{{hotspot.id}}/" id="name">{{ hotspot.name }}</a><br>
+                    ID: {{ hotspot.id }}<br>
+                    User: {{ hotspot.user }}<br>
+                    Latitude: <a id="LAT">{{ hotspot.LAT }}</a><br>
+                    Longitude: <a id="LNG">{{ hotspot.LNG }}</a><br>
+                    Description: {{ hotspot.description }}<br>
+                    Logo: <img src="{{hotspot.logo}}"\>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="body-section">0 Hotspots found.</div>
+        {% endif %}
+    {% endblock content %}

@@ -9,4 +9,4 @@ from hotspot.api.models import CheckIn
 def index(request):
     hotspots = Hotspot.objects.all()
     context = {'hotspots': hotspots}
-    return render(request, 'hotspots.html', context)
+    return render(request, 'desktop/hotspots.html', context)
