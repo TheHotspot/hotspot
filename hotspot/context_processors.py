@@ -5,7 +5,7 @@ def analytics(request):
     """
     Returns Google analytics code.
     """
-    if not settings.DEBUG:
+    if not settings.DEBUG or settings.DEBUG_ANALYTICS:
         return { 'analytics_code': render_to_string("analytics.html", { 'google_analytics_key': settings.GOOGLE_ANALYTICS_KEY }) }
     else:
         return { 'analytics_code': "" }
@@ -14,7 +14,7 @@ def uservoice(request):
     """
     Returns Uservoice feedback box code.
     """
-    if not settings.DEBUG:
+    if not settings.DEBUG or settings.DEBUG_USERVOICE:
         return { 'uservoice_code': render_to_string("uservoice.html", {}) }
     else:
         return { 'uservoice_code': "" }
