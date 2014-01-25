@@ -8,39 +8,26 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Changing field 'Hotspot.description'
-        db.alter_column(u'api_hotspot', 'description', self.gf('django.db.models.fields.CharField')(max_length=2000))
+        # Adding field 'Hotspot.address'
+        db.add_column(u'api_hotspot', 'address',
+                      self.gf('django.db.models.fields.CharField')(default='', max_length=500, blank=True),
+                      keep_default=False)
 
-        # Changing field 'Hotspot.logo'
-        db.alter_column(u'api_hotspot', 'logo', self.gf('django.db.models.fields.CharField')(max_length=200))
 
     def backwards(self, orm):
-        # Deleting field 'Hotspot.nickname'
-        db.delete_column(u'api_hotspot', 'nickname')
+        # Deleting field 'Hotspot.address'
+        db.delete_column(u'api_hotspot', 'address')
 
-        # Deleting field 'Hotspot.capacity'
-        db.delete_column(u'api_hotspot', 'capacity')
-
-        # Deleting field 'Hotspot.website'
-        db.delete_column(u'api_hotspot', 'website')
-
-        # Deleting field 'Hotspot.telephone'
-        db.delete_column(u'api_hotspot', 'telephone')
-
-
-        # Changing field 'Hotspot.description'
-        db.alter_column(u'api_hotspot', 'description', self.gf('django.db.models.fields.CharField')(max_length=1000))
-
-        # Changing field 'Hotspot.logo'
-        db.alter_column(u'api_hotspot', 'logo', self.gf('django.db.models.fields.CharField')(max_length=100))
 
     models = {
         u'api.business': {
             'Meta': {'object_name': 'Business'},
             'admins': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['api.User']", 'symmetrical': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'logo': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+            'logo': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '200', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'nickname': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '40', 'blank': 'True'}),
+            'website': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '200', 'blank': 'True'})
         },
         u'api.checkin': {
             'Meta': {'object_name': 'CheckIn'},
@@ -51,11 +38,12 @@ class Migration(SchemaMigration):
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['api.User']"})
         },
         u'api.hotspot': {
-            'LAT': ('django.db.models.fields.FloatField', [], {}),
-            'LNG': ('django.db.models.fields.FloatField', [], {}),
+            'LAT': ('django.db.models.fields.FloatField', [], {'blank': 'True'}),
+            'LNG': ('django.db.models.fields.FloatField', [], {'blank': 'True'}),
             'Meta': {'object_name': 'Hotspot'},
-            'business': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['api.Business']"}),
-            'capacity': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'address': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '500', 'blank': 'True'}),
+            'business': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['api.Business']", 'blank': 'True'}),
+            'capacity': ('django.db.models.fields.IntegerField', [], {'default': '0', 'blank': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '2000', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'logo': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '200', 'blank': 'True'}),

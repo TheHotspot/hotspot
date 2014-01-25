@@ -7,6 +7,8 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqBxaWVr861YPUXahCNkoLJEHznXvp7k&sensor=true">
         </script>
         <script type="text/javascript">
+            var inhotspots = '{{ hotspots_json | escapejs }}';
+            var hotspots = JSON.parse(inhotspots);
             function initialize() {
                 var mapOptions = {
                     zoom: 12,
@@ -14,12 +16,19 @@
                 };
 
                 var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+                $.each(hotspots, function() {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(this.LAT, this.LNG),
+                        map: map,
+                        title:this.name
+                    });
+                    marker.setMap(map);
+                });
             }
 
             window.onload = initialize;
 
-            var hotspots = '{{ hotspots_json | safe }}';
-            console.log(JSON.stringify(hotspots));
         </script>
     {% endblock includes %}
 

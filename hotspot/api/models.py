@@ -177,8 +177,11 @@ class Business(models.Model):
 
     """
     name = models.CharField(max_length=100)
-    logo = models.CharField(max_length=100)
     admins = models.ManyToManyField(User)
+
+    nickname = models.CharField(max_length=40, blank=True, default="")
+    logo = models.CharField(max_length=200, blank=True, default="")
+    website = models.CharField(max_length=200, blank=True, default="")
 
     def __unicode__(self):  # Python 3: def __str__(self):
         return self.name
@@ -320,17 +323,21 @@ class Hotspot(models.Model):
 
     """
     name = models.CharField(max_length=100)
-    business = models.ForeignKey(Business)
-    LAT = models.FloatField()
-    LNG = models.FloatField()
+    business = models.ForeignKey(Business, blank=True)
+    LAT = models.FloatField(blank=True)
+    LNG = models.FloatField(blank=True)
+    address = models.CharField(max_length=500, blank=True, default="")
 
     nickname = models.CharField(max_length=40, blank=True, default="")
-    capacity = models.IntegerField(null=True)
+    capacity = models.IntegerField(blank=True, default=0)
 
     description = models.CharField(max_length=2000, blank=True, default="")
     website = models.CharField(max_length=200, blank=True, default="")
     logo = models.CharField(max_length=200, blank=True, default="")
     telephone = models.CharField(max_length=25, blank=True, default="")
+
+    def admins(self):
+        return self.business.admins.all()
 
     def __unicode__(self):  # Python 3: def __str__(self):
         return self.name
