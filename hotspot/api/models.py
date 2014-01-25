@@ -444,6 +444,24 @@ class Hotspot(models.Model):
     def checkins_recent(self, user=None, records=3, sort_key='time_in'):
         return self.checkins(user=user, records=records)
 
+    # Scanners
+    @staticmethod
+    @sortable
+    def search_by_radius(lat, lng, radius=10):
+        """
+        Find all hotspots within a given radius (limited to 50km)
+        """
+
+        find_by_radius_sql = \
+        '''SELECT api_hotspot.id, api_hotspot.LAT, api_hotspot.LNG, 
+        ( 3959 * acos(cos(radians( %(ILAT)s ) ) * cos( radians( LAT )) * cos(radians( LNG ) - radians( %(ILNG)s )) + sin(radians( %(ILAT)s )) * sin(radians( LAT )))) AS distance FROM api_hotspot
+        HAVING distance < %(IRAD)s
+        ORDER BY distance'''
+
+
+        ids = [x.id for x in Hotspot.objects.raw(find_by_radius_sql, {"ILAT":lat,"ILNG":lng,"IRAD":radius})]
+        return Hotspot.objects.filter(id__in=ids)
+
 class CheckIn(models.Model):
     """
     CheckIns are linked many-to-one with model:`Hotspot` and many-to-one with model:`User`

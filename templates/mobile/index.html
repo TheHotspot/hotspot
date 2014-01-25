@@ -14,15 +14,20 @@
 
             // TODO: compartamentalize geolocate+apps into a module/imported template
 
+            var map;
+            var user_location;
+            var user_lat;
+            var user_lon;
+
             function initialize() {
                 // user defaults at default cords
-                var user_location = new google.maps.LatLng(user_lat, user_lon);
+                user_location = new google.maps.LatLng(user_lat, user_lon);
                 var mapOptions = {
                     zoom: 12,
                     center: user_location
                 };
                 // init map
-                var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
                 // geolocate
                 if (navigator.geolocation) {
@@ -36,13 +41,16 @@
                     user_lat = position.coords.latitude;
                     user_lon = position.coords.longitude;
                     user_location = new google.maps.LatLng(user_lat, user_lon);
+                    map.panTo(user_location);
                     map.setCenter(user_location, 12);
+
 
                     var marker = new google.maps.Marker({
                         position: user_location,
                         map: map,
                         title:"My Current Location",
-                        icon: "static/mobile/geolocate.png"
+                        icon: "static/mobile/geolocate.png",
+                        url: "http://google.com"
                     });
                     marker.setMap(map);
                 }
