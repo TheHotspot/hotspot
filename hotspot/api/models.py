@@ -11,6 +11,7 @@ from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
 
 import hashlib
+import random
 
 from functools import wraps
 
@@ -336,11 +337,19 @@ class Hotspot(models.Model):
     logo = models.CharField(max_length=200, blank=True, default="")
     telephone = models.CharField(max_length=25, blank=True, default="")
 
-    def admins(self):
-        return self.business.admins.all()
-
     def __unicode__(self):  # Python 3: def __str__(self):
         return self.name
+
+    def score(self):
+        """
+        Returns the number of people checked in (number to display on maps)
+        """
+        
+        # Legit Version
+        #return checkins_checkedin().count()
+        # "augmented" results
+        return checkins_checkedin().count()*2+random.randint(5,20)
+
 
     # setters
     def checkin(self, user, time_in=timezone.now(), time_out=epoch):
@@ -390,6 +399,12 @@ class Hotspot(models.Model):
 
         users = User.objects.filter(**filterargs).distinct()
         return users
+
+    def admins(self):
+        """
+        Returns the users in control of this hotspot
+        """
+        return self.business.admins.all()
 
     # Gets QuerySet of <object>s that are currently checked into this hotspot
     @sortable

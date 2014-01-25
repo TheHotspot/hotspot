@@ -8,7 +8,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'username', 'email', 'telephone')
 
 class HotspotAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'nickname', 'business', 'description', 'LAT', 'LNG',  'capacity', 'telephone', 'admins', 'checkins_recent')
+    list_display = ('id', 'name', 'score', 'nickname', 'business', 'description', 'LAT', 'LNG',  'capacity', 'telephone', 'admins', 'checkins_recent')
 
 class BusinessAdmin(admin.ModelAdmin):
     list_display = ('name', 'hotspots', 'checkins_recent')

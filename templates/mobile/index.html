@@ -3,20 +3,54 @@
     {% block title %}Hotspot Home | Mobile{% endblock title %}
 
     {% block includes %}
-        <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqBxaWVr861YPUXahCNkoLJEHznXvp7k&sensor=true">
-        </script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqBxaWVr861YPUXahCNkoLJEHznXvp7k&sensor=true"></script>
         <script type="text/javascript">
             var inhotspots = '{{ hotspots_json | escapejs }}';
             var hotspots = JSON.parse(inhotspots);
+
+            // Default cords = center of portland
+            var user_lat = 45.5310495;
+            var user_lon = -122.6651523;
+
+            // TODO: compartamentalize geolocate+apps into a module/imported template
+
             function initialize() {
+                // user defaults at default cords
+                var user_location = new google.maps.LatLng(user_lat, user_lon);
                 var mapOptions = {
                     zoom: 12,
-                    center: new google.maps.LatLng(45.5534, -122.8192)
+                    center: user_location
                 };
-
+                // init map
                 var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+                // geolocate
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(success, error, {timeout:10000});
+                }
+                else {
+                    console.log('geolocation not supported on this device');
+                }
+                function success(position) {
+                    // set user_position to geolocated cords, then center map there
+                    user_lat = position.coords.latitude;
+                    user_lon = position.coords.longitude;
+                    user_location = new google.maps.LatLng(user_lat, user_lon);
+                    map.setCenter(user_location, 12);
+
+                    var marker = new google.maps.Marker({
+                        position: user_location,
+                        map: map,
+                        title:"My Current Location",
+                        icon: "static/mobile/geolocate.png"
+                    });
+                    marker.setMap(map);
+                }
+                function error(msg) {
+                    console.log('geolocation error: ' + msg);
+                }
+
+                // Loop through through all hotspots and place markers on the map
                 $.each(hotspots, function() {
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(this.LAT, this.LNG),
