@@ -67,17 +67,25 @@
                         title:this.name,
                         url:this.website,
                     });
-                    var infowindow = new google.maps.InfoWindow({
-                              content: this.name
-                          })
+                    var description = this.description;
+                    var name = this.name;
+                    var id = this.id;
                     google.maps.event.addListener(marker, 'click', function() {
-                        infowindow.open(map,marker);
+                        html = "<h2>"+name+"</h2>   <button onClick='checkin("+id+")'>Check In</button><br>"+description
+                        $('#hotspot-info').html(html);
                       });
                     marker.setMap(map);
                 });
             }
 
             window.onload = initialize;
+
+        function checkin(hotspot_id) {
+            $.get("/api/scan?id="+hotspot_id, function(data) {
+              $("#checkin-status").html(JSON.stringify(data));
+              $(".dial").val(parseInt($(".dial").val())+1);
+            });
+        }
 
         </script>
     {% endblock includes %}
@@ -86,8 +94,8 @@
         <div id="sidebar">
             <ul>
                 <li id="checkins"><input type="text" value="{{checkins}}" class="dial"></li>
-                <li>Promotion two</li>
-                <li>Promotion three</li>
+                <li id="hotspot-info"></li>
+                <li id="checkin-status"></li>
             </ul>
         </div>
         <script>

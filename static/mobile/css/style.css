@@ -103,6 +103,10 @@ header {
     padding-bottom: 10px;
 }
 
+#hotspot-info {
+    height: 100px;
+}
+
 @media (max-width: 25cm) and (orientation: portrait) and (max-width: 700px) {
     body {background-color: #ccc;}
 

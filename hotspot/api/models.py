@@ -342,7 +342,7 @@ class Hotspot(models.Model):
 
     """
     name = models.CharField(max_length=100)
-    business = models.ForeignKey(Business, blank=True)
+    business = models.ForeignKey(Business, blank=True, null=True)
     LAT = models.FloatField(blank=True)
     LNG = models.FloatField(blank=True)
     address = models.CharField(max_length=500, blank=True, default="")
