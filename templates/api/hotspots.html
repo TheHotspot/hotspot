@@ -1,28 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hotspots</title>
-</head>
-<body>
-
-{% if hotspots %}
-    <ul>
-    {% for hotspot in hotspots %}
-        <li>
-            <a href="/api/hotspot/{{hotspot.id}}/">{{hotspot.name}}</a><br>
-            ID: {{ hotspot.id }}<br>
-            User: {{ hotspot.user }}<br>
-            Latitude: {{ hotspot.LAT }}<br>
-            Longitude: {{ hotspot.LNG }}<br>
-            Description: {{ hotspot.description }}<br>
-            Logo: <img src="{{hotspot.logo}}"\>
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>0 Hotspots found.</p>
-{% endif %}
-
-
-</body>
-</html>
+{
+    "status": "{{ status }}",
+    "results": [
+        {% for hotspot in hotspots %}
+            {
+                "hotspot_id":       "hotspot.id",
+                "name":             "{{hotspot.name|escapejs}}",
+                "description":      "{{hotspot.description|escapejs}}",
+                "nickname":         "{{hotspot.nickname|escapejs}}",
+                "website":          "{{hotspot.website|escapejs}}",
+                "phone_number":     "{{hotspot.telephone|escapejs}}",
+                "latitude":         "hotspot.LAT",
+                "longitude":        "hotspot.LNG",
+                "full_address":     "{{hotspot.address|escapejs}}",
+                "distance":         "0",
+                "categories":       null,
+                "stats_total_scans": "1",
+                "stats_current_scanned": "1",
+                "stats_male_scans": "1",
+                "stats_female_scans": "1"
+            }
+        {% endfor %}
+    ]
+}

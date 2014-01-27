@@ -1,31 +1,24 @@
 from django.conf.urls import patterns, include, url
 
-from views import GenericViewSet, GenericSerializer
+import views
 
 from rest_framework import renderers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from rest_framework.routers import DefaultRouter
 
 import models
 
-@api_view(('GET',))
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'hotspots': reverse('hotspot-list', request=request, format=format),
-        'businesses': reverse('business-list', request=request, format=format),
-        'checkins': reverse('checkin-list', request=request, format=format),
-    })
-
+router = DefaultRouter()
+router.register(r'users', views.GenericViewSet(models.User, ('id', 'first_name', 'last_name', 'email', 'telephone')))
+router.register(r'hotspots', views.GenericViewSet(models.Hotspot, ('id', 'name', 'LAT', 'LNG', 'nickname', 'capacity', 'telephone')))
+router.register(r'businesses', views.GenericViewSet(models.Business, ('id', 'name', 'logo')))
+router.register(r'checkins', views.GenericViewSet(models.CheckIn, ('id', 'time_in', 'time_out')))
 
 urlpatterns = patterns('',
-    url(r'^$', api_root),
-    url(r'^users/$', GenericViewSet(models.User, ('id', 'first_name', 'last_name', 'email', 'telephone')).as_view({"get": "list"}), name='user-list'),
-    url(r'^hotspots/$', GenericViewSet(models.Hotspot, ('id', 'name', 'LAT', 'LNG', 'nickname', 'capacity', 'telephone')).as_view({"get": "list"}), name='hotspot-list'),
-    url(r'^businesses/$', GenericViewSet(models.Business, ('id', 'name', 'logo')).as_view({"get": "list"}), name='business-list'),
-    url(r'^checkins/$', GenericViewSet(models.CheckIn, ('id', 'time_in', 'time_out')).as_view({"get": "list"}), name='checkin-list'),
-
+    url(r'^$', views.docs),
+    url(r'search', views.hotspots_by_distance),
     # # API Documentation
     # url(r'^$', views.docs, name='docs'),
 
@@ -55,4 +48,7 @@ urlpatterns = patterns('',
 
     # # User by username
     # url(r'^user/(?P<username>\D.*[^/])(/||$)', views.user_by_username, name='user'),
+
+    # Rest Framework API
+    url(r'^v2/', include(router.urls)),
 )

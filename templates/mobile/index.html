@@ -4,6 +4,7 @@
 
     {% block includes %}
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqBxaWVr861YPUXahCNkoLJEHznXvp7k&sensor=true"></script>
+        <script type="text/javascript" src="static/mobile/js/jquery.knob.js"></script>
         <script type="text/javascript">
             var inhotspots = '{{ hotspots_json | escapejs }}';
             var hotspots = JSON.parse(inhotspots);
@@ -63,8 +64,15 @@
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(this.LAT, this.LNG),
                         map: map,
-                        title:this.name
+                        title:this.name,
+                        url:this.website,
                     });
+                    var infowindow = new google.maps.InfoWindow({
+                              content: this.description
+                          })
+                    google.maps.event.addListener(marker, 'click', function() {
+                        infowindow.open(map,marker);
+                      });
                     marker.setMap(map);
                 });
             }
@@ -75,13 +83,22 @@
     {% endblock includes %}
 
     {% block content %}
-        <div id="promotions">
+        <div id="sidebar">
             <ul>
-                <li>Promotion one</li>
+                <li id="checkins"><input type="text" value="{{checkins}}" class="dial"></li>
                 <li>Promotion two</li>
                 <li>Promotion three</li>
             </ul>
         </div>
+        <script>
+            $(function() {
+                $(".dial").knob({
+                'readOnly':true,
+                'fgColor':"#FF0000",
+                'bgColor':"#000000"
+                });
+            });
+        </script>
         <div id="map-canvas"></div>
         <div id="map-border"><a>Hotspots</a><a>Friends</a></div>
         {% if hotspots %}

@@ -19,11 +19,19 @@ def index(request):
             'LAT':hotspot.LAT,
             'LNG':hotspot.LNG,
             'logo':hotspot.logo,
+            'description':hotspot.description,
+            'address':hotspot.address,
+            'nickname':hotspot.nickname,
+            'capacity':hotspot.capacity,
+            'website':hotspot.website,
+            'telephone':hotspot.telephone,
         })
 
     hotspots_json = json.dumps(hotspots)
+    checkins = CheckIn.checkins_checkedin().count()
     context = {
         'hotspots': hotspots,
+        'checkins': checkins,
         'hotspots_json': hotspots_json,
         'device': device,
     }

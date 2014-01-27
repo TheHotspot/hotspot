@@ -89,10 +89,12 @@ header {
     max-width: 500px;
     min-width: 200px;
     margin: 5px;
+    vertical-align: top;
 }
 
-#promotions {
-    display: none;
+#checkins {
+    height: 200px;
+    padding-bottom: 10px;
 }
 
 @media (max-width: 25cm) and (orientation: portrait) and (max-width: 700px) {
@@ -150,7 +152,7 @@ header {
         width: 75%;
     }
 
-    #promotions {
+    #sidebar {
         display: block;
         width: 24.9%;
         height: 440px;
@@ -161,13 +163,9 @@ header {
         vertical-align: top;
     }
 
-    #promotions li {
+    #sidebar li {
         border: 1px brown dashed;
-        padding-top: 10px;
-        margin-top:15px;
-    }
-    #promotions li:hover {
-        background-color: red;
+        padding-bottom: 0px !important;
     }
 
     .body-section {
