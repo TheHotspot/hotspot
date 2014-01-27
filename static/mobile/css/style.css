@@ -54,6 +54,12 @@ header {
     font-style: underline;
 }
 
+#profile-pic {
+    height: 2.6em;
+    float: right;
+    margin-top: -10px;
+}
+
 #map-canvas {
     height: 400px;
     width: 100%;

@@ -16,7 +16,7 @@ def export_selected_objects(modeladmin, request, queryset):
 import models as api
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'first_name', 'last_name', 'username', 'email', 'telephone')
+    list_display = ('id', 'get_full_name', 'username', 'email', 'gender', 'status', 'birthdate')
 
 class HotspotAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'score', 'nickname', 'business', 'description', 'LAT', 'LNG',  'capacity', 'telephone', 'admins', 'checkins_recent')

@@ -49,8 +49,9 @@ class User(AbstractUser):
     :class:`.User` extends :class:`.AbstractUser` .
     """
 
-    telephone = models.CharField(max_length=20, blank=True, default="")
-    """ Field: Telephone Number. Defaults to None."""
+    gender = models.CharField(max_length=1, blank=True, default="")
+    status = models.IntegerField(blank=True, default=0)
+    birthdate = models.DateField(default=timezone.now)
 
     def checkin(self, hotspot, time_in=timezone.now(), time_out=epoch):
         """

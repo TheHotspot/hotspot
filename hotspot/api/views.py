@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.sessions.models import Session
+from django.db import IntegrityError
+import datetime
 
 from rest_framework import viewsets, serializers, permissions, renderers
 from rest_framework.decorators import link
@@ -82,10 +84,7 @@ def scan_json(checkin, current=-1):
         return {}
 
 @csrf_exempt
-def register(request):
-    """
-    not implemented yet
-    """
+def register(request, SSL=True):
     email = get_parameter(request, 'email', '')
     password = get_parameter(request, 'password', '')
     name = get_parameter(request, 'name', '')
@@ -95,10 +94,33 @@ def register(request):
 
     response = {"status":"ERROR-FAILED-REGISTRATION"}
 
+    if email and password and birthdate:
+        birthdate = datetime.datetime.strptime(birthdate, '%Y-%m-%d').date()
+        valid = datetime.date.today()-datetime.timedelta(6574)
+
+        if birthdate > valid:
+            response["status"] = "ERROR-INVALID-BIRTHDATE"
+        else:
+            try:
+                newuser = User( username=email, 
+                                password=password, 
+                                email=email, 
+                                gender=gender,
+                                status=status,
+                                first_name=name.split(" ")[0], 
+                                last_name=" ".join(name.split(" ")[1:]), 
+                                birthdate=birthdate)
+                newuser.save()
+                response["user_id"] = newuser.id
+                response["status"] = "SUCCESS"
+            except IntegrityError as e:
+                response["status"] = "ERROR-EMAIL-TAKEN"
+                response["error-details"] = str(e[1])
+
     return HttpResponse(json.dumps(response), content_type="application/json")  
 
 @csrf_exempt
-def auth(request):
+def auth(request, SSL=True):
     email = get_parameter(request, 'e', '')
     passhash = get_parameter(request, 'h', '')
 
@@ -226,6 +248,40 @@ def history(request):
     
     return HttpResponse(json.dumps(response), content_type="application/json")
 
+@csrf_exempt
+def oauth(request):
+    email = get_parameter(request, 'e', '')
+    passhash = get_parameter(request, 'h', '')
+
+    response = {"status":"ERROR-INVALID-AUTH",
+                "session":"",
+                "user_id":"",
+                "is_manager":"",
+                "join_date":"",
+                "name":"",
+                "maritial_status":"",
+                "gender":""}
+
+    if email and passhash:
+        username = User.objects.filter(email=email)[0].username
+        user = authenticate(username=username, password=passhash)
+
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                response["status"] = "AUTHENTICATED"
+
+                response["user_id"] = str(user.id)
+                response["is_manager"] = str(int(user.is_admin()))
+                response["join_date"] = str(user.date_joined)
+                response["name"] = user.get_full_name()
+                response["maritial_status"] = "1"
+                response["gender"] = "M"
+
+            else:
+                response["status"] = "ERROR-USER-BANNED"
+    
+    return HttpResponse(json.dumps(response), content_type="application/json")
 
 ### v0 handmade html api
 

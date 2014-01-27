@@ -29,10 +29,18 @@ def index(request):
 
     hotspots_json = json.dumps(hotspots)
     checkins = CheckIn.checkins_checkedin().count()
+
+    profile_img = "http://vpn.nicksweeting.com/images/up.gif"
+    if request.user.is_authenticated():
+        socialaccount = request.user.socialaccount_set.filter(provider='facebook')
+        if socialaccount:
+            profile_img = socialaccount[0].get_avatar_url()
+        
     context = {
         'hotspots': hotspots,
         'checkins': checkins,
         'hotspots_json': hotspots_json,
         'device': device,
+        'profile_img': profile_img,
     }
     return render(request, 'mobile/index.html', context)

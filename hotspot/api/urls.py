@@ -11,21 +11,22 @@ from rest_framework.routers import DefaultRouter
 import models
 
 router = DefaultRouter()
-router.register(r'users', views.GenericViewSet(models.User, ('id', 'first_name', 'last_name', 'email', 'telephone')))
+router.register(r'users', views.GenericViewSet(models.User, ('id', 'get_full_name', 'email', 'gender', 'status', 'birthdate')))
 router.register(r'hotspots', views.GenericViewSet(models.Hotspot, ('id', 'name', 'LAT', 'LNG', 'nickname', 'capacity', 'telephone')))
 router.register(r'businesses', views.GenericViewSet(models.Business, ('id', 'name', 'logo')))
 router.register(r'checkins', views.GenericViewSet(models.CheckIn, ('id', 'time_in', 'time_out')))
 
 urlpatterns = patterns('',
     url(r'^$', views.docs),
+    url(r'register', views.register, {'SSL':True}),
+    url(r'auth', views.auth, {'SSL':True}),
     url(r'search_top', views.search),
     url(r'search', views.search),
     url(r'hotspot', views.hotspot_lookup),
     url(r'scan_out', views.scan_out),
     url(r'scan', views.scan),
-    url(r'register', views.register),
     url(r'history', views.history),
-    url(r'auth', views.auth),
+
     # # API Documentation
     # url(r'^$', views.docs, name='docs'),
 

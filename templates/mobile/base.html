@@ -11,6 +11,7 @@
             {% block topbar %}
                 <h1>HOTSPOT Beta</h1>
                 <div id="device"> {{ device }}</div>
+                <img id="profile-pic" src="{{profile_img}}" alt="{{user.get_full_name}}">
                 <div id="links">
                     {% if request.user.is_authenticated %}
                         <a href="/auth/logout">Logged In</a>
