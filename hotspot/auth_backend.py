@@ -2,9 +2,9 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from allauth.socialaccount.models import SocialToken
 
-
 class OAuthTokenBackend(object):
-    """Log in to Django using an oauth token
+    """
+    Log in to Django using an oauth token
 
     """
     def authenticate(self, token=None):

@@ -51,7 +51,7 @@ class User(AbstractUser):
 
     gender = models.CharField(max_length=1, blank=True, default="")
     status = models.IntegerField(blank=True, default=0)
-    birthdate = models.DateField(default=timezone.now)
+    birthdate = models.DateField(blank=True, null=True, default=None)
 
     def checkin(self, hotspot, time_in=timezone.now(), time_out=epoch):
         """
