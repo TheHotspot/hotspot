@@ -76,6 +76,15 @@
                       });
                     marker.setMap(map);
                 });
+
+                $.get("/api/history?limit=2", function(data) {
+                    content = ""
+                    history = data.history
+                    $.each(history, function() {
+                        content = content+JSON.stringify(this)+"<br>";
+                    })
+                    $("#recent-checkins").html(content)
+                });
             }
 
             window.onload = initialize;
@@ -93,9 +102,12 @@
     {% block content %}
         <div id="sidebar">
             <ul>
-                <li id="checkins"><input type="text" value="{{checkins}}" class="dial"></li>
-                <li id="hotspot-info"></li>
-                <li id="checkin-status"></li>
+                <li id="checkins">
+                    <div id="recent-checkins">Recent Checkins</div>
+                    <div id="checkin-dial"><input type="text" value="{{checkins}}" class="dial"></div>
+                </li>
+                <li id="hotspot-info">Hotspot Info</li>
+                <li id="checkin-status">CheckIn Status</li>
             </ul>
         </div>
         <script>

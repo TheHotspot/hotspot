@@ -107,6 +107,18 @@ header {
     height: 100px;
 }
 
+#checkin-dial {
+    float:right;
+}
+
+#recent-checkins {
+    display: block;
+    float: left;
+    width: 50%;
+    overflow-wrap: break-word;
+}
+
+
 @media (max-width: 25cm) and (orientation: portrait) and (max-width: 700px) {
     body {background-color: #ccc;}
 
