@@ -35,6 +35,15 @@ class BusinessAdmin(admin.ModelAdmin):
 
 class CheckInAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'hotspot', 'time_in', 'time_out', 'length', 'is_checkedin')
+    def checkout(self, request, queryset):
+        ids = []
+        for checkin in queryset:
+            checkin.checkout()
+            ids.append(checkin.id)
+        self.message_user(request, "Checkins: %s Checked out." % ids)
+
+    checkout.short_description = "Check out now"
+    actions = [checkout]
 
 admin.site.register(api.User, UserAdmin)
 admin.site.register(api.Hotspot, HotspotAdmin)

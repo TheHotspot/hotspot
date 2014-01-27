@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^mobile/',    include('hotspot.apps.mobile.urls')),
     url(r'^api/',       include('hotspot.api.urls')),
     url(r'^auth/',      include('allauth.urls')),
+    url(r'^accounts/',  include('allauth.urls')),
     url(r'^$',          include('hotspot.apps.mobile.urls')),
 )
 

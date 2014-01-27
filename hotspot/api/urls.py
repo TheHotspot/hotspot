@@ -18,7 +18,14 @@ router.register(r'checkins', views.GenericViewSet(models.CheckIn, ('id', 'time_i
 
 urlpatterns = patterns('',
     url(r'^$', views.docs),
-    url(r'search', views.hotspots_by_distance),
+    url(r'search_top', views.search),
+    url(r'search', views.search),
+    url(r'hotspot', views.hotspot_lookup),
+    url(r'scan_out', views.scan_out),
+    url(r'scan', views.scan),
+    url(r'register', views.register),
+    url(r'history', views.history),
+    url(r'auth', views.auth),
     # # API Documentation
     # url(r'^$', views.docs, name='docs'),
 

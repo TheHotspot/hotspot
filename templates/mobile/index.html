@@ -68,7 +68,7 @@
                         url:this.website,
                     });
                     var infowindow = new google.maps.InfoWindow({
-                              content: this.description
+                              content: this.name
                           })
                     google.maps.event.addListener(marker, 'click', function() {
                         infowindow.open(map,marker);

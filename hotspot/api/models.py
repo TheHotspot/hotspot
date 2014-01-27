@@ -59,6 +59,7 @@ class User(AbstractUser):
         """
         newcheckin = CheckIn(user=self, hotspot=hotspot, time_in=time_in, time_out=time_out)
         newcheckin.save()
+        return newcheckin
 
     def checkout(self, checkin=None, business=None, hotspot=None, time_out=timezone.now()):
         """
@@ -167,6 +168,22 @@ class User(AbstractUser):
             if checkin.is_checkedin():
                 return True
         return False
+
+    def is_admin(self, business=None, hotspot=None):
+        """
+        returns true if user is admin of business
+        returns true if user is admin of hotspot
+        returns true if user is admin of any hotspot
+        returns true if user is admin of any business
+        """
+        filterargs = {}
+
+        if hotspot:
+            filterargs["hotspot__id"] = hotspot__id
+        if business:
+            filterargs["hotspot__business__id"] = business.id
+
+        return bool(self.business_set.all().filter(**filterargs).count())
 
     # Formatters
     def checkins_recent(self, business=None, hotspot=None, records=3, sort_key='time_in'):
@@ -359,13 +376,15 @@ class Hotspot(models.Model):
         """
         check into this hotspot with specified user
         """
-        User.CheckIn(user=user, hotspot=self, time_in=time_in,time_out=time_out)
+        return User.CheckIn(user=user, hotspot=self, time_in=time_in,time_out=time_out)
+
     def checkout(self, user, time_out=timezone.now()):
         """
         Checks out user from this hotspot
         """
         for checkin in checkins_checkedin(user=user):
             checkin.checkout(time_out)
+
     def checkout_all(self, time_out=timezone.now()):
         """
         Checks out all users from this hotspot
@@ -449,8 +468,7 @@ class Hotspot(models.Model):
 
     # Scanners
     @staticmethod
-    @sortable
-    def search_by_radius(lat, lng, radius=10):
+    def search_by_radius(lat, lng, radius=10, limit=200):
         """
         Find all hotspots within a given radius (limited to 50km)
         """
@@ -459,10 +477,11 @@ class Hotspot(models.Model):
         '''SELECT api_hotspot.id, api_hotspot.LAT, api_hotspot.LNG, 
         ( 3959 * acos(cos(radians( %(ILAT)s ) ) * cos( radians( LAT )) * cos(radians( LNG ) - radians( %(ILNG)s )) + sin(radians( %(ILAT)s )) * sin(radians( LAT )))) AS distance FROM api_hotspot
         HAVING distance < %(IRAD)s
-        ORDER BY distance'''
+        ORDER BY distance
+        LIMIT 0, %(ILIM)s'''
 
 
-        ids = [x.id for x in Hotspot.objects.raw(find_by_radius_sql, {"ILAT":lat,"ILNG":lng,"IRAD":radius})]
+        ids = [x.id for x in Hotspot.objects.raw(find_by_radius_sql, {"ILAT":float(lat),"ILNG":float(lng),"IRAD":float(radius), "ILIM":int(limit)+1})]
         return Hotspot.objects.filter(id__in=ids)
 
 class CheckIn(models.Model):
