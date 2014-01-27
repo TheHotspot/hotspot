@@ -14,4 +14,5 @@ south
 django-werkzeug-debugger-runserver
 django-xadmin
 django-debug-toolbar
+django-ssl-redirect
 
