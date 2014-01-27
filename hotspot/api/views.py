@@ -205,7 +205,7 @@ def scan_out(request):
         response = {"status":"SUCCESS"}
 
     return HttpResponse(json.dumps(response), content_type="application/json")
-    
+
 @csrf_exempt
 def history(request):
     session = get_parameter(request, 'session', '')
@@ -226,7 +226,9 @@ def history(request):
     
     return HttpResponse(json.dumps(response), content_type="application/json")
 
+
 ### v0 handmade html api
+
 @csrf_exempt
 def docs(request):
     version = 1
