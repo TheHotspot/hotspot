@@ -14,12 +14,12 @@
                 {% if request.user.is_authenticated %}
                     <img id="profile-pic" src="{{profile_img}}" alt="{{user.get_full_name}}">
                     <div id="links">
-                            <a href="/auth/logout">Logged In</a>
+                            <a id="login-link" href="/auth/logout">Logged In</a>
                     </div>
                 {% else %}
-                    <img id="profile-pic" src="http://vpn.nicksweeting.com/images/down.gif" alt="{{user.get_full_name}}">
+                    <img id="profile-pic" src="http://vpn.nicksweeting.com/images/down.gif">
                     <div id="links">
-                            <a href="/auth/login" id="login-link">Log In</a>
+                            <a id="login-link" href="/auth/login" >Log In</a>
                     </div>
                 {% endif %}
             {% endblock topbar %}

@@ -82,6 +82,33 @@ AUTHENTICATION (HTTPS ONLY)
     Upon a SUCCESS status, there will also be a PHP session cookie set. Some of
     the other APIs may require this be passed.
 
+================================================================================
+OAUTH AUTHENTICATION (HTTPS ONLY)
+================================================================================
+  API URL: /api/oauth
+  
+  Required Inputs:
+    "provider"      - The OAuth provider (currently can only be "facebook")
+    "access_token"  - The valid OAuth access token from authing on the app
+  
+  Optional Inputs:
+    None.
+  
+  JSON Response Fields:
+    "status" - Can be one of the following:
+       "AUTHENTICATED" - Successfully logged in.
+       "ERROR-USER-BANNED" - The user has been banned from the system.
+       "ERROR-OAUTH-EXCEPTION" - An oauth exception occured.
+       "ERROR-INVALID-PROVIDER" - The provider isn't supported.
+    "session" - The session ID for the website.
+    "user_id" - The user ID.
+    "is_manager" - 1 if they are a manager, 0 otherwise.
+    "join_date" - The date of when they joined.
+
+  Other Notes:
+    Upon a AUTHENTICATED status, there will also be a PHP session cookie set. 
+    Some of the other APIs may require this be passed.
+
 
 ================================================================================
 SEARCHING

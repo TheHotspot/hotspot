@@ -249,11 +249,11 @@ def history(request):
     return HttpResponse(json.dumps(response), content_type="application/json")
 
 @csrf_exempt
-def oauth(request):
-    email = get_parameter(request, 'e', '')
-    passhash = get_parameter(request, 'h', '')
+def oauth(request, SSL=True):
+    provider = get_parameter(request, 'provider', 'facebook')
+    access_token = get_parameter(request, 'access_token', '')
 
-    response = {"status":"ERROR-INVALID-AUTH",
+    response = {"status":"ERROR-OAUTH-EXCEPTION",
                 "session":"",
                 "user_id":"",
                 "is_manager":"",
@@ -262,15 +262,12 @@ def oauth(request):
                 "maritial_status":"",
                 "gender":""}
 
-    if email and passhash:
-        username = User.objects.filter(email=email)[0].username
-        user = authenticate(username=username, password=passhash)
-
+    if access_token:
+        user = authenticate(token=access_token)
         if user is not None:
             if user.is_active:
                 login(request, user)
                 response["status"] = "AUTHENTICATED"
-
                 response["user_id"] = str(user.id)
                 response["is_manager"] = str(int(user.is_admin()))
                 response["join_date"] = str(user.date_joined)

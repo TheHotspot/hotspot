@@ -18,14 +18,15 @@ router.register(r'checkins', views.GenericViewSet(models.CheckIn, ('id', 'time_i
 
 urlpatterns = patterns('',
     url(r'^$', views.docs),
-    url(r'register', views.register, {'SSL':True}),
-    url(r'auth', views.auth, {'SSL':True}),
-    url(r'search_top', views.search),
-    url(r'search', views.search),
-    url(r'hotspot', views.hotspot_lookup),
-    url(r'scan_out', views.scan_out),
-    url(r'scan', views.scan),
-    url(r'history', views.history),
+    url(r'^register', views.register, {'SSL':True}),
+    url(r'^oauth', views.oauth, {'SSL':True}),
+    url(r'^auth', views.auth, {'SSL':True}),
+    url(r'^search_top', views.search),
+    url(r'^search', views.search),
+    url(r'^hotspot', views.hotspot_lookup),
+    url(r'^scan_out', views.scan_out),
+    url(r'^scan', views.scan),
+    url(r'^history', views.history),
 
     # # API Documentation
     # url(r'^$', views.docs, name='docs'),
