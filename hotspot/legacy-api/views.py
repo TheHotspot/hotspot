@@ -10,12 +10,18 @@ from django.db import IntegrityError
 import simplejson as json
 import datetime
 
-from models import User
-from models import Business
-from models import Hotspot
-from models import CheckIn
+from hotspot.api.models import User
+from hotspot.api.models import Business
+from hotspot.api.models import Hotspot
+from hotspot.api.models import CheckIn
 
 from django.db import models
+
+@csrf_exempt
+def docs(request):
+    version = 1
+    context = {'version': version}
+    return render(request, 'legacy-api/docs.html', context)
 
 ### Legacy API for iPhone & Android app backwards-compatibility
 
@@ -260,9 +266,3 @@ def oauth(request, SSL=True):
                 response["status"] = "ERROR-USER-BANNED"
     
     return HttpResponse(json.dumps(response), content_type="application/json")
-
-@csrf_exempt
-def docs(request):
-    version = 1
-    context = {'version': version}
-    return render(request, 'legacy-api/docs.html', context)

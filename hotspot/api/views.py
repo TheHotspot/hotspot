@@ -15,6 +15,12 @@ from models import Business
 from models import Hotspot
 from models import CheckIn
 
+@csrf_exempt
+def docs(request):
+    version = 2
+    context = {'version': version}
+    return render(request, 'api/docs.html', context)
+
 ### Favored API for Hotspot-made apps to access internal data
 
 def get_parameter(request, key, default=""):
@@ -50,7 +56,26 @@ def hotspot_json(hotspot, distance=0):
         return {}
 
 @csrf_exempt
-def docs(request):
-    version = 1
-    context = {'version': version}
-    return render(request, 'api/docs.html', context)
+def scan(request):
+    hotspot_id = get_parameter(request, 'id', '')
+    session = get_parameter(request, 'session', '')   # horrible, django doesnt use this auth method, only cookies allowed
+
+    response = {"status":"ERROR-SCAN-FAILURE","scan_id": 0, "user_stats":{"stats_total_scans":0, "stats_distinct_hotspot_scans":0}}
+
+    if request.user.is_authenticated():
+        user = request.user
+        if hotspot_id:
+            hotspot = Hotspot.objects.get(id=hotspot_id)
+            try:
+                response["scan_id"] = user.checkin(hotspot).id
+                response["status"] = "SUCCESS"
+            except:
+                pass
+
+        response["user_stats"]["stats_total_scans"] = user.checkins().count()
+        response["user_stats"]["stats_distinct_hotspot_scans"] = user.hotspots_visited().count()
+
+    else:
+        response["status"] = "ERROR-NO-AUTH"
+
+    return HttpResponse(json.dumps(response), content_type="application/json")

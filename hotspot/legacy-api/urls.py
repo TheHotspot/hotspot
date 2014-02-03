@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.routers import DefaultRouter
 
-import models
+import hotspot.api.models
 
 ### Legacy API for iPhone & Android app backwards-compatibility
 

@@ -7,7 +7,7 @@ from rest_framework.reverse import reverse
 from rest_framework.routers import DefaultRouter
 
 import views
-import models
+import hotspot.api.models as models
 
 router = DefaultRouter()
 router.register(r'users', views.GenericViewSet(models.User, ('id', 'get_full_name', 'email', 'gender', 'status', 'birthdate')))

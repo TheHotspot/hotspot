@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 
-
 if settings.USE_XADMIN:
     import xadmin
     xadmin.autodiscover()
@@ -25,6 +24,7 @@ urlpatterns = patterns('',
 
     # APIs
     url(r'^public-api/',include('hotspot.public-api.urls')),
+    url(r'^pubapi/',    include('hotspot.public-api.urls')),
     url(r'^api/v2/',    include('hotspot.api.urls')),
     url(r'^api/v1/',    include('hotspot.legacy-api.urls')),
     url(r'^api/',       include('hotspot.legacy-api.urls')),

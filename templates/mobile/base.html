@@ -38,11 +38,10 @@
                 <div class="navbar-collapse collapse in" style="height: auto;">
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.user.is_authenticated %}
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="#">Checkins</a></li>
                             <li><a href="#">Settings</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Settings</a></li>
+                            <li><a href="/api/history">History</a></li>
+                            <li><a href="/admin">Admin</a></li>
+                            <li><a href="/auth/social/connections/">Profile</a></li>
                             <li><a href="/auth/logout">Log Out</a></li>
                         {% else %}
                             <li><a href="/auth/login">Log In</a></li>

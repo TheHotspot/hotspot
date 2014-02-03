@@ -20,14 +20,6 @@
             var user_lat;
             var user_lon;
 
-
-        function checkin(hotspot_id) {
-            $.get("/api/scan?id="+hotspot_id, function(data) {
-              $("#checkin-status").html(JSON.stringify(data));
-              $(".dial").val(parseInt($(".dial").val())+1);
-            });
-        }
-
         </script>
     {% endblock includes %}
 
@@ -37,7 +29,7 @@
             <div id="sidebar">
                 <div class="panel panel-danger">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Hotspot Info</h3>
+                        <h3 class="panel-title">Active Users</h3>
                     </div>
                     <div class="panel-body">
                         <div id="checkin-dial"><input type="text" value="{{checkins}}" class="dial"></div>
@@ -47,16 +39,14 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Venue Details</h3>
                     </div>
-                    <div class="panel-body">
-                        description
+                    <div id="hotspot-info" class="panel-body">
                     </div>
                 </div>
                 <div class="panel panel-warning">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Check In</h3>
+                        <h3 class="panel-title">Check In History</h3>
                     </div>
-                    <div class="panel-body">
-                        Panel content
+                    <div id="recent-checkins" class="panel-body">
                     </div>
                 </div>
             </div>
@@ -72,7 +62,7 @@
             <ul class="list-group hotspots">
             {% for hotspot in hotspots %}
                 <li class="list-group-item hotspot" id="hotspot-{{hotspot.id}}">
-                    <a href="/api/hotspot?id={{hotspot.id}}" id="name">
+                    <a onClick='html="<a href=\"/api/hotspot?id={{hotspot.id}}\"><h4>{{hotspot.name}}</h4></a><br><button class=\"btn btn-lg btn-success\" onClick=\"checkin({{hotspot.id}})\">Check In</button><br>{{hotspot.description | escapejs}}"; $("#hotspot-info").html(html);' id="name">
                         <h4 class="list-group-item-heading hotspot-name">{{hotspot.name}}</h4>
                         <img class="hotspot-icon" src="{{hotspot.logo}}"/>
                     </a>
@@ -92,6 +82,13 @@
         </div>
 
         <script>
+            function checkin(hotspot_id) {
+                $.get("/api/scan?id="+hotspot_id, function(data) {
+                  $("#checkin-status").html(JSON.stringify(data));
+                  $(".dial").val(parseInt($(".dial").val())+1);
+                });
+            }
+
             function initialize() {
                 // user defaults at default cords
                 user_location = new google.maps.LatLng(user_lat, user_lon);
@@ -143,7 +140,7 @@
                     var name = this.name;
                     var id = this.id;
                     google.maps.event.addListener(marker, 'click', function() {
-                        html = "<h2>"+name+"</h2>   <button class=\"btn btn-lg btn-success\" onClick='checkin("+id+")'>Check In</button><br>"+description
+                        html = "<a href=\"/api/hotspot?id="+id+"\"><h4>"+name+"</h4></a>   <button class=\"btn btn-lg btn-success\" onClick='checkin("+id+")'>Check In</button><br>"+description
                         $('#hotspot-info').html(html);
                       });
                     marker.setMap(map);
@@ -196,13 +193,13 @@
                 });
             });
 
+            // Uncomment to enable autocompletion in hotspot search box
             // $("#hotspot-search-box").autocomplete({
             //     source: sources,
             //     autoFocus: true,
             // });
 
             $("#hotspot-search-box").keyup(filtersearch);
-
 
             window.onload = initialize;
         </script>
