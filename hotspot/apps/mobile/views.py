@@ -12,7 +12,7 @@ device = "mobile"
 
 def index(request):
     hotspots = []
-    for hotspot in Hotspot.objects.all():
+    for hotspot in Hotspot.objects.order_by('checkin__time_in'):
         hotspots.append({
             'id':hotspot.id,
             'name':hotspot.name,
