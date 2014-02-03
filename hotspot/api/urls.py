@@ -5,6 +5,4 @@ import views
 
 urlpatterns = patterns('',
     url(r'^$', views.docs),
-    url(r'^hotspots', views.hotspots),
-    url(r'^checkin', views.checkin),
 )

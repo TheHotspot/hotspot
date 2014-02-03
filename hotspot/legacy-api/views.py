@@ -265,4 +265,4 @@ def oauth(request, SSL=True):
 def docs(request):
     version = 1
     context = {'version': version}
-    return render(request, 'api/docs.html', context)
+    return render(request, 'legacy-api/docs.html', context)
