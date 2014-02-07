@@ -1,13 +1,12 @@
 // Async ajax library for accessing the Hotspot API
 
 var api = {
-    version: 'v2',
-    devices: [],
+    version: '2',
     base_url: "/api/",
-    hotspots: []
 }
 
 api.getHotspots = function(func) {
+    if (typeof(func)==='undefined') func = function(x) {console.log(x);};
     request = $.ajax({
         url: api.base_url+"/v2/hotspots",
         beforeSend: function(xhr) {
@@ -18,6 +17,7 @@ api.getHotspots = function(func) {
 }
 
 api.getHotspotsByRadius = function(lat, lng, rad, func) {
+    if (typeof(func)==='undefined') func = function(x) {console.log(x);};
     request = $.ajax({
         url: api.base_url+"search?lat="+lat+"&lng="+lng+"&distance="+rad,
         beforeSend: function(xhr) {
@@ -54,16 +54,30 @@ api.setCheckIn = function(hotspot_id, func) {
     });
 }
 
-api.setCheckIn(13);
+api.getHotspotDetails = function(hotspot_id, func) {
+    if (typeof(func)==='undefined') func = function(x) {console.log(x);};
+    request = $.ajax({
+        url: api.base_url+"hotspot?id="+hotspot_id,
+        beforeSend: function(xhr) {
+            xhr.overrideMimeType("application/json");
+        }
+    });
+    request.done(function(data){
+        if (data.status == "SUCCESS") {
+            func(data.hotspot);
+        }
+        else {
+            console.log("Not called due to ajax error: ", func);
+            console.log(data);
+        }
+    });
+}
 
-//api.getHotspots(function(x) {console.log(x)});
-api.getHotspotsByRadius(45, -122, 100,function(x) {console.log(x)});
 
-
-// function getHotspotsByRadius()
-
-// function getHotspotDetails()
-
-// function setCheckedIn()
-
-// function 
+// Examples
+//
+//print = function(x) {console.log(x)}
+//
+//api.setCheckIn(13, print);
+//api.getHotspotsByRadius(45, -122, 100, print);
+//api.getHotspotDetails(13, print);
