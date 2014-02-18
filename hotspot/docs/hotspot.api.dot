@@ -1,6 +1,6 @@
 digraph model_graph {
   # Dotfile by Django-Extensions graph_models
-  # Created: 2014-01-22 22:51
+  # Created: 2014-02-17 16:09
   # Cli Options: api
 
   fontname = "Helvetica"
@@ -105,6 +105,12 @@ digraph model_graph {
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">birthdate</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">DateField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
     <FONT FACE="Helvetica Italic">date_joined</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica Italic">DateTimeField</FONT>
@@ -120,6 +126,12 @@ digraph model_graph {
     <FONT COLOR="#7B7B7B" FACE="Helvetica Italic">first_name</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT COLOR="#7B7B7B" FACE="Helvetica Italic">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">gender</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
@@ -159,9 +171,9 @@ digraph model_graph {
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">telephone</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">status</FONT>
     </TD><TD ALIGN="LEFT">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">IntegerField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
@@ -187,15 +199,27 @@ digraph model_graph {
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">logo</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">logo</FONT>
     </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
     <FONT FACE="Helvetica ">name</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">nickname</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">website</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
     </TD></TR>
   
     </TABLE>
@@ -215,27 +239,33 @@ digraph model_graph {
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">business</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">business</FONT>
     </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">ForeignKey (id)</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">LAT</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">LAT</FONT>
     </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">FloatField</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">FloatField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">LNG</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">LNG</FONT>
     </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">FloatField</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">FloatField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">capacity</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">address</FONT>
     </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">IntegerField</FONT>
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">capacity</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">IntegerField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">

@@ -1,10 +1,10 @@
-{% extends "mobile/base.html" %}
+{% extends "web/base.html" %}
 
     {% block title %}Hotspot Home | Mobile{% endblock title %}
 
     {% block includes %}
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqBxaWVr861YPUXahCNkoLJEHznXvp7k&sensor=true"></script>
-        <script type="text/javascript" src="static/mobile/js/jquery.knob.js"></script>
+        <script type="text/javascript" src="static/common/js/jquery.knob.js"></script>
         <script type="text/javascript">
             var inhotspots = '{{ hotspots_json | escapejs }}';
             var hotspots = JSON.parse(inhotspots);
@@ -119,7 +119,7 @@
                         position: user_location,
                         map: map,
                         title:"My Current Location",
-                        icon: "static/mobile/geolocate.png",
+                        icon: "static/web/geolocate.png",
                         url: "http://google.com"
                     });
                     marker.setMap(map);

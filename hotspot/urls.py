@@ -15,8 +15,8 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     
     # Website
-    url(r'^$',          include('hotspot.apps.mobile.urls')),
-    url(r'^mobile/',    include('hotspot.apps.mobile.urls')),
+    url(r'^$',          include('hotspot.apps.web.urls')),
+    url(r'^mobile/',    include('hotspot.apps.web.urls')),
 
     # Authentication (pages with passwords)
     url(r'^auth/',      include('allauth.urls'), {'SSL':True}),
