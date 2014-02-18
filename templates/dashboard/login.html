@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <!-- Title and other stuffs -->
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+
+  <!-- Stylesheets -->
+  <link href="style/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="style/font-awesome.css">
+  <link href="style/style.css" rel="stylesheet">
+  <link href="style/bootstrap-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 Support for IE -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shim.js"></script>
+  <![endif]-->
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="img/favicon/favicon.png">
+</head>
+
+<body>
+
+<!-- Form area -->
+<div class="admin-form">
+  <div class="container-fluid">
+
+    <div class="row-fluid">
+      <div class="span12">
+        <!-- Widget starts -->
+            <div class="widget worange">
+              <!-- Widget head -->
+              <div class="widget-head">
+                <i class="icon-lock"></i> Login
+              </div>
+
+              <div class="widget-content">
+                <div class="padd">
+                  <!-- Login form -->
+                  <form class="form-horizontal">
+                    <!-- Email -->
+                    <div class="control-group">
+                      <label class="control-label" for="inputEmail">Email</label>
+                      <div class="controls">
+                        <input type="text" id="email" placeholder="Email"><img class='errimg' src="img/error.ico">
+                      </div>
+                    </div>
+                    <!-- Password -->
+                    <div class="control-group">
+                      <label class="control-label" for="inputPassword">Password</label>
+                      <div class="controls">
+                        <input type="password" id="password"><img class='errimg' src="img/error.ico">
+                      </div>
+                    </div>
+                    <!-- Remember me checkbox and sign in button -->
+                    <div class="control-group">
+                      <div class="controls">
+                        <button id="submit-btn" class="btn btn-success">Sign in</button>
+                        <label class="checkbox" style="margin-left:20%;margin-top:-20px;">
+                          <input type="checkbox"> Remember me
+                        </label>
+                      </div>
+                    </div>
+                  </form>
+                  <img id="loading-gif" src="img/ajax-bar.gif" style="margin-left:118px;width:225px;margin-top:-35px;">
+                  <p id="errors"></p>
+
+                </div>
+              </div>
+                <div class="widget-foot">
+                  Not Registred? <a href="#">Register here</a>
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script type="text/javascript">
+    $('#loading-gif').hide();
+    $('#errors').hide();
+    $('.errimg').hide();
+    /*
+    API URL: /api/auth
+
+  Required Inputs:
+    "e"    - The email address
+    "h"    - SHA1 hash of the password
+
+  Optional Inputs:
+    None.
+
+  JSON Response Fields:
+    "status" - Can be one of the following:
+       "SUCCESS" - Successfully logged in.
+       "ERROR-INVALID-AUTH" - The login credentials were invalid.
+    "user_id" - The user ID.
+    "is_manager" - 1 if they are a manager, 0 otherwise.
+    "join_date" - The date of when they joined.
+    "name" - Their display name. (optional)
+    "marital_status" - 1 if in a relationship, 0 if single (optional)
+    "gender" - "M" if male. "F" if female. (optional)
+
+  Other Notes:
+    Upon a SUCCESS status, there will also be a PHP session cookie set. Some of
+    the other APIs may require this be passed.
+    */
+
+    function get_form_content() {
+      // Get contents of form
+      var password = $('#password').val();
+
+      // SHA1 password here
+      //password = sha1(password);
+
+      var data = {
+            "email": $('#email').val(),
+            "password": password,
+        }
+      return data;
+    }
+
+    function check_and_prepare_form_content(form_content) {
+      var status = '';
+      var problems = [];
+
+      // Email validation
+      var email_regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if (!(email_regex.test(form_content['email']))) {
+        status=status+'Invalid email. ';
+        problems.push('#email');
+      }
+      if (status.length == '') status = 'valid';
+
+      // TODO
+      sha1_pass = form_content['password'];
+
+      return_content = {
+        'e':form_content['email'],
+        'p': sha1_pass
+      }
+
+      var validated_form = {'status':status, 'content':return_content, 'problems':problems};
+
+      return validated_form;
+    }
+
+    function submit_form_content(form_content) {
+      var profile_url = "/profile.html"
+
+      $.ajax({
+        url: 'http://nicksweeting.com/api/auth',
+        type: 'POST',
+        async: true,
+        cache: false,
+        data: form_content,
+
+        success: function(data) {
+            console.log('login user: ' + data['status']);
+            if (data['status'] != 'success') {
+                console.log('fail message: ' + data['fail_msg']);
+            }
+            else {
+                console.log('Sending user to:', profile_url);
+                //window.location = profile_url;
+            }
+        },
+        error: function(data) {
+            console.log('Login user connection failed');
+            $('#errors').html('Login user connection failed');
+        }
+      })
+    }
+
+    $(document).ready(function(){
+
+      $('#submit-btn').click(function(){
+        // display loading indicator gif
+        $('#loading-gif').show();
+
+        var content = get_form_content();
+        var valid_form = check_and_prepare_form_content(content);
+        if (valid_form['status'] == 'valid') {
+          submit_form_content(valid_form['content']);
+        }
+        else {
+          $('#errors').html(valid_form['status']);
+          for (i=0; i<valid_form['problems'].length;i++) {
+            $(valid_form['problems'][i]).parent().find('.errimg').show();
+          }
+          //alert("Invalid entry: "+valid_form['status']);
+        }
+      });
+    });
+</script>
+
+</body>
+</html>

@@ -43,4 +43,4 @@ def index(request):
         'device': device,
         'profile_img': profile_img,
     }
-    return render(request, 'mobile/index.html', context)
+    return render(request, 'dashboard/index.html', context)

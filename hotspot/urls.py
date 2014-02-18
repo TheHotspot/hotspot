@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     # Website
     url(r'^$',          include('hotspot.apps.web.urls')),
     url(r'^mobile/',    include('hotspot.apps.web.urls')),
+    url(r'^dashboard/', include('hotspot.apps.dashboard.urls')),
 
     # Authentication (pages with passwords)
     url(r'^auth/',      include('allauth.urls'), {'SSL':True}),
