@@ -46,6 +46,7 @@ def hotspot_json(hotspot, distance=0):
                     "phone_number":     hotspot.telephone,
                     "latitude":         str(hotspot.LAT),
                     "longitude":        str(hotspot.LNG),
+                    "tolerance":        str(hotspot.tolerance),
                     "full_address":     hotspot.address,
                     "distance":         str(distance),
                     "categories":       None,

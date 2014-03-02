@@ -5,4 +5,5 @@ import views
 
 urlpatterns = patterns('',
     url(r'^$', views.docs),
+    url(r'^locate', views.locate),
 )

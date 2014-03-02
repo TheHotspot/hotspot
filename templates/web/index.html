@@ -11,14 +11,19 @@
 
             // Default cords = center of portland
             var user_lat = 45.5310495;
-            var user_lon = -122.6651523;
+            var user_lng = -122.6651523;
 
             // TODO: compartamentalize geolocate+apps into a module/imported template
 
             var map;
             var user_location;
             var user_lat;
-            var user_lon;
+            var user_lng;
+
+            function showHotspot(id, name, description) {
+                html = "<a href=\"/api/hotspot?id="+id+"\"><h4>"+name+"</h4></a>    <button class=\"btn btn-lg btn-success\" onClick='checkin("+id+")'>Check In</button><br>"+description;
+                $('#hotspot-info').html(html);
+            }
 
         </script>
     {% endblock includes %}
@@ -40,6 +45,7 @@
                         <h3 class="panel-title">Venue Details</h3>
                     </div>
                     <div id="hotspot-info" class="panel-body">
+                    No current venue. <a href="http://localhost:8000/admin/api/hotspot/add/">Add hotspot</a>.
                     </div>
                 </div>
                 <div class="panel panel-warning">
@@ -71,6 +77,7 @@
                         User: {{hotspot.user}}<br>
                         Latitude: <a id="LAT">{{hotspot.LAT}}</a><br>
                         Longitude: <a id="LNG">{{hotspot.LNG}}</a><br>
+                        Tolerance: <a id="tolerance">{{hotspot.tolerance}}</a><br>
                         Description: {{hotspot.description}}<br>
                     </p>
                 </li>
@@ -83,7 +90,7 @@
 
         <script>
             function checkin(hotspot_id) {
-                $.get("/api/scan?id="+hotspot_id, function(data) {
+                api.setCheckIn(hotspot_id, function(data) {
                   $("#checkin-status").html(JSON.stringify(data));
                   $(".dial").val(parseInt($(".dial").val())+1);
                 });
@@ -91,7 +98,7 @@
 
             function initialize() {
                 // user defaults at default cords
-                user_location = new google.maps.LatLng(user_lat, user_lon);
+                user_location = new google.maps.LatLng(user_lat, user_lng);
                 var mapOptions = {
                     zoom: 12,
                     center: user_location
@@ -109,8 +116,8 @@
                 function success(position) {
                     // set user_position to geolocated cords, then center map there
                     user_lat = position.coords.latitude;
-                    user_lon = position.coords.longitude;
-                    user_location = new google.maps.LatLng(user_lat, user_lon);
+                    user_lng = position.coords.longitude;
+                    user_location = new google.maps.LatLng(user_lat, user_lng);
                     map.panTo(user_location);
                     map.setCenter(user_location, 12);
 
@@ -146,6 +153,11 @@
                     marker.setMap(map);
                 });
 
+                api.getCurrentHotspot(user_lat, user_lng, function(hotspot) {
+                    html = "<a href=\"/api/hotspot?id="+hotspot.id+"\"><h4>"+hotspot.name+"</h4></a>   <button class=\"btn btn-lg btn-success\" onClick='checkin("+hotspot.id+")'>Check In</button><br>"+hotspot.description;
+                    $('#hotspot-info').html(html);
+                });
+
                 // get user history
                 $.get("/api/history?limit=2", function(data) {
                     content = ""
@@ -166,7 +178,7 @@
             function filtersearch(){
                 // Retrieve the input field text and reset the count to zero
                 var filter = $(this).val(), count = 0;
-         
+
                 // Loop through the hotspot list
                 $(".hotspots li").each(function(){
                     if ($(this).text().search(new RegExp(filter, "i")) < 0) {
@@ -179,7 +191,7 @@
                         count++;
                     }
                 });
-         
+
                 // Update the count
                 var numberItems = count;
                 $("#hotspot-count").text(count+" hotspots");

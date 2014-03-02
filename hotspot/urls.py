@@ -12,8 +12,9 @@ urlpatterns = patterns('',
     # Admin URLs
     #   r'^admin/',      -->     Django Admin or Xadmin (see below)
     #   r'^docs/',       -->     sphinx docs   (see below)
+    url(r'^docs/(?P<path>.*)$', 'django.views.static.serve',{'document_root': 'hotspot/docs/_build/html', 'show_indexes':True}),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    
+
     # Website
     url(r'^$',          include('hotspot.apps.web.urls')),
     url(r'^mobile/',    include('hotspot.apps.web.urls')),
@@ -29,7 +30,6 @@ urlpatterns = patterns('',
     url(r'^api/v2/',    include('hotspot.api.urls')),
     url(r'^api/v1/',    include('hotspot.legacy-api.urls')),
     url(r'^api/',       include('hotspot.legacy-api.urls')),
-    
 )
 
 if settings.USE_XADMIN:
@@ -51,7 +51,6 @@ if settings.SERVE_STATIC_WITH_DJANGO:
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += patterns('',
-        url(r'^docs/(?P<path>.*)$', 'django.views.static.serve',{'document_root': 'hotspot/docs/_build/html', 'show_indexes':True}),
         url(r'^__debug__/', include(debug_toolbar.urls)),
     )
-    
+

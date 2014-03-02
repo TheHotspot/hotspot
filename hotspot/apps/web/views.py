@@ -35,7 +35,42 @@ def index(request):
         socialaccount = request.user.socialaccount_set.filter(provider='facebook')
         if socialaccount:
             profile_img = socialaccount[0].get_avatar_url()
-        
+
+    context = {
+        'hotspots': hotspots,
+        'checkins': checkins,
+        'hotspots_json': hotspots_json,
+        'device': device,
+        'profile_img': profile_img,
+    }
+    return render(request, 'web/index.html', context)
+
+def add(request):
+    hotspots = []
+    for hotspot in Hotspot.objects.order_by('checkin__time_in'):
+        hotspots.append({
+            'id':hotspot.id,
+            'name':hotspot.name,
+            'LAT':hotspot.LAT,
+            'LNG':hotspot.LNG,
+            'logo':hotspot.logo,
+            'description':hotspot.description,
+            'address':hotspot.address,
+            'nickname':hotspot.nickname,
+            'capacity':hotspot.capacity,
+            'website':hotspot.website,
+            'telephone':hotspot.telephone,
+        })
+
+    hotspots_json = json.dumps(hotspots)
+    checkins = CheckIn.checkins_checkedin().count()
+
+    profile_img = "http://vpn.nicksweeting.com/images/up.gif"
+    if request.user.is_authenticated():
+        socialaccount = request.user.socialaccount_set.filter(provider='facebook')
+        if socialaccount:
+            profile_img = socialaccount[0].get_avatar_url()
+
     context = {
         'hotspots': hotspots,
         'checkins': checkins,

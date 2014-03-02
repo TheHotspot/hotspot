@@ -1,5 +1,5 @@
 """
-Hotspot API v1.0  
+Hotspot API v1.0
 Nick Sweeting 2014
 """
 
@@ -51,7 +51,7 @@ class User(AbstractUser):
 
     gender = models.CharField(max_length=1, blank=True, default="")
     status = models.IntegerField(blank=True, default=0)
-    birthdate = models.DateField(blank=True, null=True, default=None)
+    birthdate = models.DateField(blank=True, default=None)
 
     def checkin(self, hotspot, time_in=timezone.now(), time_out=epoch):
         """
@@ -342,9 +342,10 @@ class Hotspot(models.Model):
 
     """
     name = models.CharField(max_length=100)
-    business = models.ForeignKey(Business, blank=True, null=True)
+    business = models.ForeignKey(Business, blank=True)
     LAT = models.FloatField(blank=True)
     LNG = models.FloatField(blank=True)
+    tolerance = models.FloatField(blank=True, default=5)
     address = models.CharField(max_length=500, blank=True, default="")
 
     nickname = models.CharField(max_length=40, blank=True, default="")
@@ -365,7 +366,7 @@ class Hotspot(models.Model):
         """
         Returns the number of people checked in (number to display on maps)
         """
-        
+
         # Legit Version
         #return checkins_checkedin().count()
         # "augmented" results
@@ -475,7 +476,7 @@ class Hotspot(models.Model):
         """
 
         find_by_radius_sql = \
-        '''SELECT api_hotspot.id, api_hotspot.LAT, api_hotspot.LNG, 
+        '''SELECT api_hotspot.id, api_hotspot.LAT, api_hotspot.LNG,
         ( 3959 * acos(cos(radians( %(ILAT)s ) ) * cos( radians( LAT )) * cos(radians( LNG ) - radians( %(ILNG)s )) + sin(radians( %(ILAT)s )) * sin(radians( LAT )))) AS distance FROM api_hotspot
         HAVING distance < %(IRAD)s
         ORDER BY distance
@@ -484,6 +485,22 @@ class Hotspot(models.Model):
 
         ids = [x.id for x in Hotspot.objects.raw(find_by_radius_sql, {"ILAT":float(lat),"ILNG":float(lng),"IRAD":float(radius), "ILIM":int(limit)+1})]
         return Hotspot.objects.filter(id__in=ids)
+
+    # Scanners
+    @staticmethod
+    def raw_search_by_radius(lat, lng, radius=10, limit=200):
+        """
+        Find all hotspots within a given radius (limited to 50km)
+        """
+
+        find_by_radius_sql = \
+        '''SELECT api_hotspot.id, api_hotspot.LAT, api_hotspot.LNG,
+        ( 3959 * acos(cos(radians( %(ILAT)s ) ) * cos( radians( LAT )) * cos(radians( LNG ) - radians( %(ILNG)s )) + sin(radians( %(ILAT)s )) * sin(radians( LAT )))) AS distance FROM api_hotspot
+        HAVING distance < %(IRAD)s
+        ORDER BY distance
+        LIMIT 0, %(ILIM)s'''
+
+        return Hotspot.objects.raw(find_by_radius_sql, {"ILAT":float(lat),"ILNG":float(lng),"IRAD":float(radius), "ILIM":int(limit)+1})
 
 class CheckIn(models.Model):
     """
@@ -522,7 +539,7 @@ class CheckIn(models.Model):
         else:
             return False
 
-    
+
     # Returns QuerySet of <object>s that are currently checked into
     @staticmethod
     @sortable
@@ -548,7 +565,7 @@ def merge_objects(primary_object, alias_objects=[], keep_old=False):
     Use this function to merge model objects (i.e. Users, Organizations, Polls,
     etc.) and migrate all of the related fields from the alias objects to the
     primary object.
-    
+
     Usage:
     from django.contrib.auth.models import User
     primary_user = User.objects.get(email='good_email@example.com')
@@ -557,18 +574,18 @@ def merge_objects(primary_object, alias_objects=[], keep_old=False):
     """
     if not isinstance(alias_objects, list):
         alias_objects = [alias_objects]
-    
+
     # check that all aliases are the same class as primary one and that
     # they are subclass of model
     primary_class = primary_object.__class__
-    
+
     if not issubclass(primary_class, Model):
         raise TypeError('Only django.db.models.Model subclasses can be merged')
-    
+
     for alias_object in alias_objects:
         if not isinstance(alias_object, primary_class):
             raise TypeError('Only models of same class can be merged')
-    
+
     # Get a list of all GenericForeignKeys in all models
     # TODO: this is a bit of a hack, since the generics framework should provide a similar
     # method to the ForeignKey field for accessing the generic related fields.
@@ -576,9 +593,9 @@ def merge_objects(primary_object, alias_objects=[], keep_old=False):
     for model in get_models():
         for field_name, field in filter(lambda x: isinstance(x[1], GenericForeignKey), model.__dict__.iteritems()):
             generic_fields.append(field)
-            
+
     local_fields = set([field.attname for field in primary_object._meta.local_fields])
-    
+
     # Loop through all alias objects and migrate their data to the primary object.
     for alias_object in alias_objects:
         # Migrate all foreign key references from alias object to primary object.
@@ -596,7 +613,7 @@ def merge_objects(primary_object, alias_objects=[], keep_old=False):
         for related_many_object in alias_object._meta.get_all_related_many_to_many_objects():
             alias_varname = related_many_object.get_accessor_name()
             obj_varname = related_many_object.field.name
-            
+
             if alias_varname is not None:
                 # standard case
                 related_many_objects = getattr(alias_object, alias_varname).all()
@@ -615,7 +632,7 @@ def merge_objects(primary_object, alias_objects=[], keep_old=False):
             for generic_related_object in field.model.objects.filter(**filter_kwargs):
                 setattr(generic_related_object, field.name, primary_object)
                 generic_related_object.save()
-                
+
         # Try to fill all missing values in primary object by values of duplicates
         filled_up = set()
         for field_name in local_fields:
@@ -625,7 +642,7 @@ def merge_objects(primary_object, alias_objects=[], keep_old=False):
                 setattr(primary_object, field_name, val)
                 filled_up.add(field_name)
         local_fields -= filled_up
-            
+
         if not keep_old:
             alias_object.delete()
     primary_object.save()

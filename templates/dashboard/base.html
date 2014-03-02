@@ -32,6 +32,7 @@
         {% block includes %}{% endblock includes %}
     </head>
     <body>
+        {{ analytics_code }}
         <div class="navbar navbar-fixed-top navbar-inverse">
           <div class="navbar-inner">
             <div class="container">
@@ -224,8 +225,5 @@
         <script src="/static/web/js/filter.js"></script> <!-- Filter for support page -->
         <script src="/static/web/js/custom.js"></script> <!-- Custom codes -->
         <script src="/static/web/js/charts.js"></script> <!-- Custom chart codes -->
-
-        {{ analytics_code }}
-        {{ uservoice_code }}
     </body>
 </html>

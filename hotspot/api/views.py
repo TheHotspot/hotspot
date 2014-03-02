@@ -44,6 +44,7 @@ def hotspot_json(hotspot, distance=0):
                     "phone_number":     hotspot.telephone,
                     "latitude":         str(hotspot.LAT),
                     "longitude":        str(hotspot.LNG),
+                    "tolerance":        str(hotspot.tolerance),
                     "full_address":     hotspot.address,
                     "distance":         str(distance),
                     "categories":       None,
@@ -77,5 +78,25 @@ def scan(request):
 
     else:
         response["status"] = "ERROR-NO-AUTH"
+
+    return HttpResponse(json.dumps(response), content_type="application/json")
+
+
+@csrf_exempt
+def locate(request):
+    lat = get_parameter(request, 'lat', '')
+    lng = get_parameter(request, 'lng', '')
+    tol = get_parameter(request, 'tolerance', '')
+
+    response = {"status":"ERROR-NO-RESULTS","hotspot": False}
+
+    if lat and lng:
+        hotspot = Hotspot.raw_search_by_radius(lat, lng, radius=1, limit=10)
+        if hotspot:
+            response["status"] = "SUCCESS"
+            response["hotspot"] = hotspot_json(hotspot[0])
+        else:
+            response["status"] = "ERROR-NO-RESULTS"
+
 
     return HttpResponse(json.dumps(response), content_type="application/json")
