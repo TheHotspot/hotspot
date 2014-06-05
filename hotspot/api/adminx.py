@@ -4,6 +4,6 @@ import xadmin
 
 import models as api
 
-xadmin.site.register(api.Hotspot)
-xadmin.site.register(api.Business)
-xadmin.site.register(api.CheckIn)
+#xadmin.site.register(api.Hotspot)
+#xadmin.site.register(api.Business)
+#xadmin.site.register(api.CheckIn)
