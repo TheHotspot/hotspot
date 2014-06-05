@@ -91,6 +91,25 @@ api.getHotspotDetails = function(hotspot_id, func) {
     });
 }
 
+api.autoCheckIn = function(lat, lng, func) {
+    // TOTHINKABOUT: some possible rearrangement of front-end and back-end duties here; do we want the backend verifying geolocation by IP, or are we just trusting users to report their location accurately?
+    if (typeof(func)==='undefined') func = function(x) {console.log(x);};
+    request = $.ajax({
+        url: api.base_url+"v2/autoCheckIn?lat="+lat+"&lng="+lng,
+        beforeSend: function(xhr) {
+            xhr.overrideMimeType("application/json");
+        }
+    });
+    request.done(function(data){
+        if (data.status == "SUCCESS") {
+            func(data.hotspot);
+        }
+        else {
+            console.log("Not called due to ajax error: ", func);
+            console.log(data);
+        }
+    });
+}
 
 // Examples
 //

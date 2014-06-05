@@ -1,6 +1,6 @@
 {% extends "web/base.html" %}
 
-    {% block title %}Hotspot Home | Mobile{% endblock title %}
+    {% block title %}Expospot Home | Mobile{% endblock title %}
 
     {% block includes %}
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqBxaWVr861YPUXahCNkoLJEHznXvp7k&sensor=true"></script>
@@ -10,8 +10,8 @@
             var hotspots = JSON.parse(inhotspots);
 
             // Default cords = center of portland
-            var user_lat = 45.5310495;
-            var user_lng = -122.6651523;
+            var user_lat = 45.5280964;
+            var user_lng = -122.6633746;
 
             // TODO: compartamentalize geolocate+apps into a module/imported template
 
@@ -100,7 +100,7 @@
                 // user defaults at default cords
                 user_location = new google.maps.LatLng(user_lat, user_lng);
                 var mapOptions = {
-                    zoom: 12,
+                    zoom: 18,
                     center: user_location
                 };
                 // init map

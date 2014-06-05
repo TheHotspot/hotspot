@@ -2,7 +2,7 @@
 body {background-color:#eee; font-family:sans-serif;padding-top:3.5em;}
 
 .navbar-brand {
-    color: brown !important;
+    color: #5badff !important;
     font-size: 2em;
 }
 #login {
@@ -19,7 +19,7 @@ body {background-color:#eee; font-family:sans-serif;padding-top:3.5em;}
 #map-border {
     display: block;
     width: 100%;
-    background-color: brown;
+    background-color: #5badff;
     text-align: center;
 }
 #map-border a {
@@ -137,7 +137,7 @@ body {background-color:#eee; font-family:sans-serif;padding-top:3.5em;}
     .hotspot {
         vertical-align: top;
         display: inline-block;
-        border: 1px brown dashed;
+        border: 1px #5badff dashed;
         width: 95%;
         min-width: 200px;
         max-width: 24%;
