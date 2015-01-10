@@ -1,0 +1,218 @@
+{% extends "web/base.html" %}
+
+    {% block title %}Hotspot Home | Mobile{% endblock title %}
+
+    {% block includes %}
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfqBxaWVr861YPUXahCNkoLJEHznXvp7k&sensor=true"></script>
+        <script type="text/javascript" src="static/common/js/jquery.knob.js"></script>
+        <script type="text/javascript">
+            var inhotspots = '{{ hotspots_json | escapejs }}';
+            var hotspots = JSON.parse(inhotspots);
+
+            // Default cords = center of portland
+            var user_lat = 45.5310495;
+            var user_lng = -122.6651523;
+
+            // TODO: compartamentalize geolocate+apps into a module/imported template
+
+            var map;
+            var user_location;
+            var user_lat;
+            var user_lng;
+
+            function showHotspot(id, name, description) {
+                html = "<a href=\"/api/hotspot?id="+id+"\"><h4>"+name+"</h4></a>    <button class=\"btn btn-lg btn-success\" onClick='checkin("+id+")'>Check In</button><br>"+description;
+                $('#hotspot-info').html(html);
+            }
+
+        </script>
+    {% endblock includes %}
+
+    {% block content %}
+        <div class="row">
+            <div id="map-canvas"></div>
+            <div id="sidebar">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Active Users</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="checkin-dial"><input type="text" value="{{checkins}}" class="dial"></div>
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Venue Details</h3>
+                    </div>
+                    <div id="hotspot-info" class="panel-body">
+                    No current venue. <a href="http://localhost:8000/admin/api/hotspot/add/">Add hotspot</a>.
+                    </div>
+                </div>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Check In History</h3>
+                    </div>
+                    <div id="recent-checkins" class="panel-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group hotspot-search">
+              <span id="hotspot-count" class="input-group-addon">Search</span>
+              <input id="hotspot-search-box" class="form-control" type="text" placeholder="Search Hotspots...">
+            </div>
+        </div>
+        <div class="row hotspot-list">
+        {% if hotspots %}
+            <ul class="list-group hotspots">
+            {% for hotspot in hotspots %}
+                <li class="list-group-item hotspot" id="hotspot-{{hotspot.id}}">
+                    <a onClick='html="<a href=\"/api/hotspot?id={{hotspot.id}}\"><h4>{{hotspot.name}}</h4></a><br><button class=\"btn btn-lg btn-success\" onClick=\"checkin({{hotspot.id}})\">Check In</button><br>{{hotspot.description | escapejs}}"; $("#hotspot-info").html(html);' id="name">
+                        <h4 class="list-group-item-heading hotspot-name">{{hotspot.name}}</h4>
+                        <img class="hotspot-icon" src="{{hotspot.logo}}"/>
+                    </a>
+                    <p class="list-group-item-text">
+                        ID: {{hotspot.id}}<br>
+                        User: {{hotspot.user}}<br>
+                        Latitude: <a id="LAT">{{hotspot.LAT}}</a><br>
+                        Longitude: <a id="LNG">{{hotspot.LNG}}</a><br>
+                        Tolerance: <a id="tolerance">{{hotspot.tolerance}}</a><br>
+                        Description: {{hotspot.description}}<br>
+                    </p>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <div class="body-section">0 Hotspots found.</div>
+        {% endif %}
+        </div>
+
+        <script>
+            function checkin(hotspot_id) {
+                api.setCheckIn(hotspot_id, function(data) {
+                  $("#checkin-status").html(JSON.stringify(data));
+                  $(".dial").val(parseInt($(".dial").val())+1);
+                });
+            }
+
+            function initialize() {
+                // user defaults at default cords
+                user_location = new google.maps.LatLng(user_lat, user_lng);
+                var mapOptions = {
+                    zoom: 12,
+                    center: user_location
+                };
+                // init map
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+                // geolocate
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(success, error, {timeout:10000});
+                }
+                else {
+                    console.log('geolocation not supported on this device');
+                }
+                function success(position) {
+                    // set user_position to geolocated cords, then center map there
+                    user_lat = position.coords.latitude;
+                    user_lng = position.coords.longitude;
+                    user_location = new google.maps.LatLng(user_lat, user_lng);
+                    map.panTo(user_location);
+                    map.setCenter(user_location, 12);
+
+
+                    var marker = new google.maps.Marker({
+                        position: user_location,
+                        map: map,
+                        title:"My Current Location",
+                        icon: "static/web/geolocate.png",
+                        url: "http://google.com"
+                    });
+                    marker.setMap(map);
+                }
+                function error(msg) {
+                    console.log('geolocation error: ' + msg);
+                }
+
+                // Loop through through all hotspots and place markers on the map
+                $.each(hotspots, function() {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(this.LAT, this.LNG),
+                        map: map,
+                        title:this.name,
+                        url:this.website,
+                    });
+                    var description = this.description;
+                    var name = this.name;
+                    var id = this.id;
+                    google.maps.event.addListener(marker, 'click', function() {
+                        html = "<a href=\"/api/hotspot?id="+id+"\"><h4>"+name+"</h4></a>   <button class=\"btn btn-lg btn-success\" onClick='checkin("+id+")'>Check In</button><br>"+description
+                        $('#hotspot-info').html(html);
+                      });
+                    marker.setMap(map);
+                });
+
+                api.getCurrentHotspot(user_lat, user_lng, function(hotspot) {
+                    html = "<a href=\"/api/hotspot?id="+hotspot.id+"\"><h4>"+hotspot.name+"</h4></a>   <button class=\"btn btn-lg btn-success\" onClick='checkin("+hotspot.id+")'>Check In</button><br>"+hotspot.description;
+                    $('#hotspot-info').html(html);
+                });
+
+                // get user history
+                $.get("/api/history?limit=2", function(data) {
+                    content = ""
+                    history = data.history
+                    $.each(history, function() {
+                        content = content+JSON.stringify(this)+"<br>";
+                    })
+                    $("#recent-checkins").html(content)
+                });
+
+                // tag collecting for autocompletion searchbox
+                var sources = [];
+                $('.hotspot-name').each(function(i,ele){
+                    sources.push({'label': $(ele).text(), 'value' : $(ele).text(), 'id' : 1});
+                });
+            }
+
+            function filtersearch(){
+                // Retrieve the input field text and reset the count to zero
+                var filter = $(this).val(), count = 0;
+
+                // Loop through the hotspot list
+                $(".hotspots li").each(function(){
+                    if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                        // If the list item does not contain the text phrase fade it out
+                        $(this).fadeOut();
+                    }
+                    else {
+                        // Show the list item if the phrase matches and increase the count by 1
+                        $(this).show();
+                        count++;
+                    }
+                });
+
+                // Update the count
+                var numberItems = count;
+                $("#hotspot-count").text(count+" hotspots");
+            }
+
+            $(function() {
+                $(".dial").knob({
+                'readOnly':true,
+                'fgColor':"#FF0000",
+                'bgColor':"#000000"
+                });
+            });
+
+            // Uncomment to enable autocompletion in hotspot search box
+            // $("#hotspot-search-box").autocomplete({
+            //     source: sources,
+            //     autoFocus: true,
+            // });
+
+            $("#hotspot-search-box").keyup(filtersearch);
+
+            window.onload = initialize;
+        </script>
+    {% endblock content %}

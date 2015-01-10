@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <!-- Title and other stuffs -->
+  <title>Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="">
+
+  <!-- Stylesheets -->
+  <link href="style/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="style/font-awesome.css">
+  <link href="style/style.css" rel="stylesheet">
+  <link href="style/bootstrap-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 Support for IE -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shim.js"></script>
+  <![endif]-->
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="img/favicon/favicon.png">
+
+</head>
+
+<body>
+
+<div class="admin-form">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <!-- Widget starts -->
+            <div class="widget wred">
+              <div class="widget-head">
+                <i class="icon-lock"></i> Register
+              </div>
+              <div class="widget-content">
+                <div class="padd">
+
+                  <form class="form-horizontal">
+                    <!-- Registration form starts -->
+                                          <!-- Email -->
+                                          <div class="control-group">
+                                            <label class="control-label" for="email">Email</label>
+                                            <div class="controls">
+                                              <input type="text" class="input-large" id="email"><img class='errimg' src="img/error.ico">
+                                            </div>
+                                          </div>
+                                          <!-- Name -->
+                                          <div class="control-group">
+                                            <label class="control-label" for="name">Name</label>
+                                            <div class="controls">
+                                              <input type="text" class="input-large" id="name"><img class='errimg' src="img/error.ico">
+                                            </div>
+                                          </div>
+                                          <!-- Gender -->
+                                          <div class="control-group">
+                                            <label class="control-label">Gender</label>
+                                            <div class="controls">
+                                                <select id="gender">
+                                                <option>Female</option>
+                                                <option>Male</option>
+                                                <option>Mixed</option>
+                                                <option>Unspecified</option>
+                                                </select><img class='errimg' src="img/error.ico">
+                                            </div>
+                                          </div>
+                                          <!-- Relationship Status -->
+                                          <div class="control-group">
+                                            <label class="control-label">Relationship Status</label>
+                                            <div class="controls">
+                                                <select id="status">
+                                                <option>Single</option>
+                                                <option>In a relationship</option>
+                                                <option>Other</option>
+                                                <option>Unspecified</option>
+                                                </select><img class='errimg' src="img/error.ico">
+                                            </div>
+                                          </div>
+                                          <!-- BirthDate -->
+                                          <div class="control-group">
+                                            <label class="control-label" for="birthdate">Date of Birth <br><p style="font-size:12px;">(YYYY-MM-DD)</p></label>
+                                            <div class="controls">
+                                              <input type="text" class="input-small" id="birthdate"><img class='errimg' src="img/error.ico">
+                                            </div>
+                                          </div>
+                                          <!-- Password -->
+                                          <div class="control-group">
+                                            <label class="control-label" for="email">Password</label>
+                                            <div class="controls">
+                                              <input type="password" class="input-large" id="password"><img class='errimg' src="img/error.ico">
+                                            </div>
+                                          </div>
+                                          <!-- Accept box and button s-->
+                                          <div class="control-group">
+                                            <div class="controls">
+                                              <label class="checkbox">
+                                                <input type="checkbox"> I Accept the <a href="termsandconditions">Terms &amp; Conditions</a>
+                                              </label>
+                                              <br>
+                                              <button id="submit-btn" class="btn btn-success" style="margin-left:20%;">Register</button>
+                                              <br><img id="loading-gif" src="img/ajax-bar.gif" style="margin-left:11%;">
+                                              <p id="errors"></p>
+
+                                              <!--<button type="reset" class="btn btn-danger" style="margin-left:85px;">Reset</button>-->
+                                            </div>
+                                          </div>
+                  </form>
+
+                </div>
+              </div>
+                <div class="widget-foot">
+                  Already Registred? <a href="login.html">Login</a>
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script type="text/javascript">
+    $('#loading-gif').hide();
+    $('.errimg').hide();
+    /*
+    API URL: /api/register
+
+      Required Inputs:
+        "email" - The email address for the account
+        "password" - The SHA1 hash of the password
+
+      Optional Inputs:
+        "name" - Their given display name
+        "gender" - M for male. F for female
+        "status" - Relationship status. 0 for single. 1 for in a relationship
+        "birthdate" - A date in the format YYYY-MM-DD that is their day of birth
+
+      JSON Response Fields:
+        "status" - Can be one of the following:
+           "SUCCESS" - Successfully scanned in
+           "ERROR-INVALID-EMAIL" - The email address provided is invalid.
+           "ERROR-EMAIL-TAKEN" - The email address provided is already taken.
+           "ERROR-INVALID-BIRTHDATE" - The birthdate provided was invalid.
+           "ERROR-FAILED-REGISTRATION" - The registration failed for some reason.
+        "user_id" - The user ID for the newly registered account.
+      */
+
+    function get_form_content() {
+      // Get contents of form
+      var password = $('#password').val();
+
+      // SHA1 password here
+      //password = sha1(password);
+
+      var data = {
+            "email": $('#email').val(),
+            "password": password,
+            "name": $('#name').val(),
+            "gender": $('#gender').val(),
+            "status": $('#status').val(),
+            "birthdate": $('#birthdate').val()
+        }
+      return data;
+    }
+
+    function validate_form_content(form_content) {
+      var status = '';
+      var problems = [];
+
+      // Email validation
+      var email_regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if (!(email_regex.test(form_content['email']))) {
+        status=status+'Invalid email. ';
+        problems.push('#email');
+      }
+
+      // Name validation
+      if (!(form_content['name'].length >= 2)) {
+        status=status+"Name is too short. ";
+        problems.push('#name');
+      }
+      // Password validation
+      if (!(form_content['password'].length) >= 4) {
+        status=status+"Password is too short. ";
+        problems.push('#password');
+      }
+      // Birthdate validation
+      if (!(form_content['birthdate'].split('-').length == 3 )) {
+        status=status+"Invalid birthdate. ";
+        problems.push('#birthdate');
+      }
+      if (!(form_content['birthdate'].split('-')[0].length == 4 )) {
+        status=status+"Invalid year in birthdate. ";
+        problems.push('#birthdate');
+      }
+      if (!(form_content['birthdate'].split('-')[1] <= 12 )) {
+        status=status+"Invalid month in birthdate. ";
+        problems.push('#birthdate');
+      }
+      if (!(form_content['birthdate'].split('-')[2] <= 31 )) {
+        status=status+"Invalid day in birthdate. ";
+        problems.push('#birthdate');
+      }
+      if (!(form_content['birthdate'].split('-')[0] <= 1995 )) {
+        status=status+"You must be 18 or above to use The Hotspot. ";
+        problems.push('#birthdate');
+      }
+
+      if (status.length == '') status = 'valid';
+
+      var validated_form = {'status':status, 'content':form_content, 'problems':problems};
+
+      return validated_form;
+
+    }
+
+    function submit_form_content(form_content) {
+      var profile_url = "/profile.html"
+
+      $.ajax({
+        url: 'http://nicksweeting.com/api/register',
+        async: true,
+        type: 'POST',
+        data: form_content,
+
+        success: function(data) {
+            console.log('register user: ' + data['status']);
+            if (data['status'] != 'success') {
+                console.log('fail message: ' + data['fail_msg']);
+            }
+            else {
+                console.log('Sending user to:', profile_url);
+                //window.location = profile_url;
+            }
+        },
+        error: function(data) {
+            console.log('register user AJAX connection failed');
+        }
+      })
+    }
+
+    $(document).ready(function(){
+
+      $('#submit-btn').click(function(){
+        // display loading indicator gif
+        $('#loading-gif').show();
+
+        var content = get_form_content();
+        var valid_form = validate_form_content(content);
+        if (valid_form['status'] == 'valid') {
+          submit_form_content(valid_form['content']);
+        }
+        else {
+          $('#errors').html(valid_form['status']);
+          for (i=0; i<valid_form['problems'].length;i++) {
+            $(valid_form['problems'][i]).parent().find('.errimg').show();
+          }
+          //alert("Invalid entry: "+valid_form['status']);
+        }
+      });
+    });
+</script>
+</body>
+</html>

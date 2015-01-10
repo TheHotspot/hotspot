@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+
+        <title>{% block title %}Hotspot Home | Mobile{% endblock title %}</title>
+
+        <!-- Stylesheets -->
+        <link href="/static/common/css/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/dashboard/css/font-awesome.css"> <!-- Font awesome icon -->
+        <link rel="stylesheet" href="/static/common/css/jquery-ui.css"> <!-- jQuery UI -->
+        <link rel="stylesheet" href="/static/dashboard/css/fullcalendar.css"> <!-- Calendar -->
+        <link rel="stylesheet" href="/static/dashboard/css/prettyPhoto.css"> <!-- prettyPhoto -->
+        <link rel="stylesheet" href="/static/dashboard/css/rateit.css"> <!-- Star rating -->
+        <link rel="stylesheet" href="/static/common/css/bootstrap-datetimepicker.min.css"> <!-- Date picker -->
+        <link rel="stylesheet" href="/static/common/css/jquery.gritter.css"> <!-- jQuery Gritter -->
+        <link rel="stylesheet" href="/static/common/css/jquery.cleditor.css"> <!-- CLEditor -->
+        <link rel="stylesheet" href="/static/common/css/bootstrap-toggle-buttons.css"> <!-- Bootstrap toggle -->
+        <link rel="stylesheet" href="/static/dashboard/css/style.css"> <!-- Main stylesheet -->
+        <link rel="stylesheet" href="/static/dashboard/css/widgets.css"> <!-- Widgets stylesheet -->
+        <link rel="stylesheet" href="/static/common/css/bootstrap-responsive.css"> <!-- Responsive style (from Bootstrap) -->
+        <script type="text/javascript" src="/static/common/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/common/js/api.js"></script>
+        <script type="text/javascript" src="/static/common/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/static/common/js/bootstrap.min.js"></script>
+        {% block includes %}{% endblock includes %}
+    </head>
+    <body>
+        {{ analytics_code }}
+        <div class="navbar navbar-fixed-top navbar-inverse">
+          <div class="navbar-inner">
+            <div class="container">
+              <!-- Menu button for smallar screens -->
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+              </a>
+              <!-- Site name for smallar screens -->
+              <a href="index.html" class="brand">Hotspot <span class="bold">Map</span></a>
+
+              <!-- Navigation starts -->
+              <div class="nav-collapse collapse">
+                <!-- Links -->
+                <ul class="nav pull-right">
+                  <li class="dropdown pull-right">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                      <img src="/static/dashboard/img/user.jpg" alt="" class="nav-user-pic" /> Nick Sweeting <b class="caret"></b>
+                    </a>
+
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu">
+                      <li><a href="#"><i class="icon-user"></i> Profile</a></li>
+                      <li><a href="#"><i class="icon-cogs"></i> Settings</a></li>
+                      <li><a href="login.html"><i class="icon-off"></i> Logout</a></li>
+                    </ul>
+                  </li>
+
+                </ul>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Main content starts -->
+
+        <div class="content">
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-dropdown"><a href="#">Navigation</a></div>
+
+                <div class="sidebar-inner">
+
+                  <!--- Sidebar navigation -->
+                  <!-- If the main navigation has sub navigation, then add the class "has_submenu" to "li" of main navigation. -->
+                  <ul class="navi">
+
+                    <!-- Use the class nred, ngreen, nblue, nlightblue, nviolet or norange to add background color. You need to use this in <li> tag. -->
+
+
+                    <li class="nlightblue current"><a href="tables.html"><i class="icon-table"></i> Hotspots</a></li>
+                    <li class="nred"><a href="index.html"><i class="icon-desktop"></i> Dashboard</a></li>
+
+                    <!-- Menu with sub menu -->
+                    <li class="has_submenu nlightblue">
+                      <a href="#">
+                        <!-- Menu name with icon -->
+                        <i class="icon-th"></i> Widgets
+                        <!-- Icon for dropdown -->
+                        <span class="pull-right"><i class="icon-angle-right"></i></span>
+                      </a>
+
+                      <ul>
+                        <li class="submenu"><a href="widgets1.html">Widgets #1</a></li>
+                        <li class="submenu"><a href="widgets2.html">Widgets #2</a></li>
+                      </ul>
+                    </li>
+
+                    <li class="ngreen"><a href="charts.html"><i class="icon-bar-chart"></i> Charts</a></li>
+
+                    <li class="norange"><a href="ui.html"><i class="icon-sitemap"></i> UI Elements</a></li>
+
+                    <li class="has_submenu nviolet">
+                      <a href="#">
+                        <i class="icon-file-alt"></i> Pages #1
+                        <span class="pull-right"><i class="icon-angle-right"></i></span>
+                      </a>
+
+                      <ul>
+                        <li><a href="calendar.html">Calendar</a></li>
+                        <li><a href="post.html">Make Post</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="statement.html">Statement</a></li>
+                        <li><a href="error-log.html">Error Log</a></li>
+                        <li><a href="support.html">Support</a></li>
+                      </ul>
+                    </li>
+
+                    <li class="has_submenu nblue">
+                      <a href="#">
+                        <i class="icon-file-alt"></i> Pages #2
+                        <span class="pull-right"><i class="icon-angle-right"></i></span>
+                      </a>
+
+                      <ul>
+                        <li><a href="error.html">Error</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="grid.html">Grid</a></li>
+                        <li><a href="invoice.html">Invoice</a></li>
+                        <li><a href="media.html">Media</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                      </ul>
+                    </li>
+
+                    <li class="nred"><a href="forms.html"><i class="icon-list"></i> Forms</a></li>
+
+                  </ul>
+
+
+
+                </div>
+
+            </div>
+
+            <!-- Sidebar ends -->
+
+            <!-- Main bar -->
+            <div class="mainbar">
+
+
+                <!-- Matter -->
+
+                <div class="matter">
+                <div class="container-fluid">
+
+                <div id="map" style="position:absolute; z-index:0;height:500px;width:105%;padding:0px; margin:-20px; background-color:grey;"></div>
+                <div style="z-index:100; position:absolute;padding: 4px; background-color: rgba(1,1,1,.3);color:#000; width:290px; height:30px;">
+                      <input type="text" placeholder="Enter a city & state" name="address" id="address" class="text">
+                      <select name="maxResults" id="maxResults" style="display:none;">
+                          <option value="10">10 results</option>
+                          <option value="25">25 results</option>
+                          <option value="75">75 results</option>
+                          <option value="150">150 results</option>
+                          <option value="1000" selected>Unlimited</option>
+                      </select>
+                      <a href="" class="blightblue btn btn-info" style="margin-top:-9px;" onclick="searchByAddress();return false;">Search</a>
+                  </div>
+
+                  <div id="hotspotInfo" style="clear:both; display:block;height:300px; width:100%; margin-top:500px;background-color:#ddd;">
+                    <h3><a href="#" id="hotspotName"></a></h3>
+                    <ul style="float:left;background-color:#DDD;padding:10px;list-style-type:none;margin-left:10px; margin-top:5px; width:500px; height: 300px;"
+                        <li><strong>Phone:</strong> <span id="hotspotPhone"></span></li>
+                        <li><strong>Website:</strong> <span id="hotspotWebsite"></span></li>
+                        <li><strong>Categories:</strong> <span id="hotspotCategories"></span></li>
+                      </ul>
+                    <p id="hotspotDescription"></p>
+                  </div>
+                </div>
+                  </div>
+
+                <!-- Matter ends -->
+
+            </div>
+
+           <!-- Mainbar ends -->
+           <div class="clearfix"></div>
+
+        </div>
+        <!-- Content ends -->
+
+        <!-- Scroll to top -->
+        <span class="totop"><a href="#"><i class="icon-chevron-up"></i></a></span>
+
+        <!-- JS -->
+        <script src="/static/web/js/jquery.js"></script> <!-- jQuery -->
+        <script src="/static/web/js/bootstrap.js"></script> <!-- Bootstrap -->
+        <script src="/static/web/js/jquery-ui-1.10.2.custom.min.js"></script> <!-- jQuery UI -->
+        <script src="/static/web/js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
+        <script src="/static/web/js/jquery.rateit.min.js"></script> <!-- RateIt - Star rating -->
+        <script src="/static/web/js/jquery.prettyPhoto.js"></script> <!-- prettyPhoto -->
+
+        <!-- jQuery Flot -->
+        <script src="/static/web/js/excanvas.min.js"></script>
+        <script src="/static/web/js/jquery.flot.js"></script>
+        <script src="/static/web/js/jquery.flot.resize.js"></script>
+        <script src="/static/web/js/jquery.flot.pie.js"></script>
+        <script src="/static/web/js/jquery.flot.stack.js"></script>
+
+        <script src="/static/web/js/jquery.gritter.min.js"></script> <!-- jQuery Gritter -->
+        <script src="/static/web/js/sparklines.js"></script> <!-- Sparklines -->
+        <script src="/static/web/js/jquery.cleditor.min.js"></script> <!-- CLEditor -->
+        <script src="/static/web/js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->
+        <script src="/static/web/js/jquery.toggle.buttons.js"></script> <!-- Bootstrap Toggle -->
+        <script src="/static/web/js/filter.js"></script> <!-- Filter for support page -->
+        <script src="/static/web/js/custom.js"></script> <!-- Custom codes -->
+        <script src="/static/web/js/charts.js"></script> <!-- Custom chart codes -->
+    </body>
+</html>

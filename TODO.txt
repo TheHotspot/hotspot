@@ -1,0 +1,4 @@
+1. REST API, return django and search api
+2. get iPhone app plug-an-play-ready
+3. implement rewards
+4. fix responsive mobile homepage to reflect iphone app

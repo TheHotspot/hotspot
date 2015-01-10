@@ -1,0 +1,7 @@
+*.pyc
+.DS_Store
+hotspot/db-auth.txt
+db-auth.txt
+*.save
+hotspot/docs/_build
+.git-old

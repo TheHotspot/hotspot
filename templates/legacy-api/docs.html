@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v1 API Docs</title>
+</head>
+<body>
+<pre>
+<b>Hotspot Legacy v1 API</b>
+GET and POST supported
+HTTPS enforced for pages with passwords
+
+URLS:
+
+/                 ->         this page (docs)
+
+/register         ->         register new user
+/auth             ->         authenticate as an existing user
+
+/search           ->         search for hotspots by distance from specified Lat,Lng
+/search_top       ->         /search
+/hotspot          ->         hotspot details
+
+/scan             ->         check into a hotspot
+/scan_out         ->         check out of a hotspot
+/history          ->         view checkin history for a user
+
+example access: localhost:8000/api/hotspot?id=3
+
+================================================================================
+REGISTERING (HTTPS ONLY)
+================================================================================
+  API URL: /api/register
+  
+  Required Inputs:
+    "email" - The email address for the account
+    "password" - The cleartext password
+
+  Optional Inputs:
+    "name" - Their given display name
+    "gender" - M for male. F for female
+    "status" - Relationship status. 0 for single. 1 for in a relationship
+    "birthdate" - A date in the format YYYY-MM-DD that is their day of birth
+  
+  JSON Response Fields:
+    "status" - Can be one of the following:
+       "SUCCESS" - Successfully scanned in
+       "ERROR-INVALID-EMAIL" - The email address provided is invalid.
+       "ERROR-EMAIL-TAKEN" - The email address provided is already taken.
+       "ERROR-INVALID-BIRTHDATE" - The birthdate provided was invalid.
+       "ERROR-FAILED-REGISTRATION" - The registration failed for some reason.
+    "user_id" - The user ID for the newly registered account.
+  
+  Other Notes:
+    None.
+
+================================================================================
+AUTHENTICATION (HTTPS ONLY)
+================================================================================
+  API URL: /api/auth
+  
+  Required Inputs:
+    "e"    - The email address
+    "h"    - the cleartext password
+  
+  Optional Inputs:
+    None.
+  
+  JSON Response Fields:
+    "status" - Can be one of the following:
+       "AUTHENTICATED" - Successfully logged in.
+       "ERROR-INVALID-AUTH" - The login credentials were invalid.
+       "ERROR-USER-BANNED" - The user has been banned from the system.
+    "session" - The session ID.
+    "user_id" - The user ID.
+    "is_manager" - 1 if they are a manager, 0 otherwise.
+    "join_date" - The date of when they joined.
+    "name" - Their display name. (optional)
+    "marital_status" - 1 if in a relationship, 0 if single (optional)
+    "gender" - "M" if male. "F" if female. (optional)
+
+  Other Notes:
+    Upon a SUCCESS status, there will also be a PHP session cookie set. Some of
+    the other APIs may require this be passed.
+
+================================================================================
+OAUTH AUTHENTICATION (HTTPS ONLY)
+================================================================================
+  API URL: /api/oauth
+  
+  Required Inputs:
+    "provider"      - The OAuth provider (currently can only be "facebook")
+    "access_token"  - The valid OAuth access token from authing on the app
+  
+  Optional Inputs:
+    None.
+  
+  JSON Response Fields:
+    "status" - Can be one of the following:
+       "AUTHENTICATED" - Successfully logged in.
+       "ERROR-USER-BANNED" - The user has been banned from the system.
+       "ERROR-OAUTH-EXCEPTION" - An oauth exception occured.
+       "ERROR-INVALID-PROVIDER" - The provider isn't supported.
+    "session" - The session ID for the website.
+    "user_id" - The user ID.
+    "is_manager" - 1 if they are a manager, 0 otherwise.
+    "join_date" - The date of when they joined.
+
+  Other Notes:
+    Upon a AUTHENTICATED status, there will also be a PHP session cookie set. 
+    Some of the other APIs may require this be passed.
+
+
+================================================================================
+SEARCHING
+================================================================================
+  API URL: /api/search
+  
+  Required Inputs:
+    "lat"       - Latitude of current location
+    "lng"       - Longitude of current location
+    "distance"  - Maximum radial distance
+
+  Optional Inputs:
+    "limit"     - Maximum number of results (default=10)
+    "stathours" - Number of historical hours back for which to compute stats 
+                  (default=24)
+  
+  JSON Response Fields:
+    "status" - Can be one of the following:
+       "SUCCESS" - Results found.
+       "ERROR-NO-RESULTS" - No results were found for the given inputs.
+    "results" - A list of hotspot results. Each of which contain:
+       "hotspot_id" - The hotspot ID
+       "name" - The full name of the hotspot
+       "description" - Description of the hotspot (optional)
+       "nickname" - Nickname for the hotspot (optional)
+       "website" - Official website address for the hotspot (optional)
+       "phone_number - Primary contact phone number for the hotspot (optional)
+       "latitude" - Latitude for the location of the hotspot
+       "longitude" - Longitude for the location of the hotspot
+       "full_address" - The full address string
+       "distance" - Radial distance from current location
+       "categories" - CSV of listed categories
+       "stats_total_scans" - TOTAL scans ever, for the hotspot
+       "stats_current_scanned" - Scans since "stathours"
+       "stats_male_scans" - Male scans since "stathours"
+       "stats_female_scans" - Female scans since "stathours"
+
+  Other Notes:
+    All searches are currently performed by location only. Eventually we'll add
+    in more searching parameters, such as by name, categories, etc.
+    
+    Male scans + Female scans will probably not be equal to the current_scanned
+    since many people will likely not specify a gender upon signing up.
+
+
+================================================================================
+HOTSPOT DATA LOOKUP (by ID)
+================================================================================
+  API URL: /api/hotspot
+  
+  Required Inputs:
+    "id" - The ID of the hotspot to lookup
+
+  Optional Inputs:
+    None.
+  
+  JSON Response Fields:
+    "status" - Can be one of the following:
+       "SUCCESS" - Results found
+       "ERROR-NO-HOTSPOT" - No hotspot found for that ID
+    "hotspot" - The hotspot data, which may contain: 
+       "hotspot_id" - The hotspot ID
+       "name" - The full name of the hotspot
+       "description" - Description of the hotspot (optional)
+       "nickname" - Nickname for the hotspot (optional)
+       "website" - Official website address for the hotspot (optional)
+       "phone_number - Primary contact phone number for the hotspot (optional)
+       "latitude" - Latitude for the location of the hotspot
+       "longitude" - Longitude for the location of the hotspot
+       "distance" - Radial distance from current location
+       "categories" - CSV of listed categories
+
+  Other Notes:
+    No statistic data is returned through this. If needed, let me know and I 
+    will add it.
+
+
+================================================================================
+SCANNING IN
+================================================================================
+  API URL: /api/scan
+  
+  Required Cookies:
+    "sessionid" - The django session ID set upon login.
+
+  Required Inputs:
+    "id" - The hotspot ID that is being scanned.
+
+  Optional Inputs:
+    None.
+  
+  JSON Response Fields:
+    "status" - Can be one of the following:
+       "SUCCESS" - Successfully scanned in
+       "ERROR-NO-AUTH" - Not authenticated
+       "ERROR-SCAN-FAILURE" - Some other scannning error occured
+    "scan_id" - The record ID of the scan.
+    "user_stats" - User stats. Contains:
+       "stats_total_scans" - The total number of scans that this user has done
+       "stats_distinct_hotspot_scans" - The distinct number of hotspots ever scanned in by the user
+  
+  Other Notes:
+    None.
+
+================================================================================
+SCANNING OUT (explicitly leaving a location)
+================================================================================
+  API URL: /api/scan_out
+  
+  Required Cookies:
+    "sessionid" - The django session ID set upon login.
+
+  Optional Inputs:
+    None.
+  
+  JSON Response Fields:
+    "status" - Can be one of the following:
+       "SUCCESS" - Successfully scanned out (even if they weren't scanned in anywhere)
+       "ERROR-NO-AUTH" - Not authenticated
+  
+  Other Notes:
+    Users are automatically flagged as having left a location if they either
+    scan in somewhere else or if they don't scan in for a given period of time
+    (which we haven't determined yet. It's currently set to 6 hours for testing).
+    This particular request is only necessary for if the user explicity says
+    that they are leaving their current location.
+
+
+================================================================================
+SCAN HISTORY
+================================================================================
+  API URL: /api/history
+  
+  Required Cookies:
+    "sessionid" - The django session ID set upon login.
+
+  Optional Inputs:
+    "limit"     - Maximum number of results (default=5)
+  
+  JSON Response Fields:
+    "status" - Can be one of the following:
+       "SUCCESS" - Successfully scanned in
+       "ERROR-NO-AUTH" - Not authenticated
+    "history" - List of scan history. Each result Contains:
+       "scan_id" - Unique ID for the scan.
+       "hotspot_id" - The corresponding hotspot ID
+       "scan_date" - The moment when the scan occured
+       "current" - 1 if it is their current scan, 0 otherwise.
+  
+  Other Notes:
+    There should be at most ONE history result with the current flag set to 1.
+    It is not unusual to have no results with the current flag. To be considered
+    current, the scan must have happened within 6 hours, must be their most
+    recent scan, and cannot have been "scanned out".
+
+
+
+</pre>
+</body>
+</html>

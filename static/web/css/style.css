@@ -1,0 +1,170 @@
+/*     General & Resets     */
+body {background-color:#eee; font-family:sans-serif;padding-top:3.5em;}
+
+.navbar-brand {
+    color: brown !important;
+    font-size: 2em;
+}
+#login {
+    display: none;
+    float:right;
+    padding: 6px;
+    padding-left: 12px;
+}
+#login-image {
+    height: 35px;
+    border: 1px dashed gray;
+}
+
+#map-border {
+    display: block;
+    width: 100%;
+    background-color: brown;
+    text-align: center;
+}
+#map-border a {
+    display: inline-block;
+    min-width: 240px;
+    width: 48%;
+    background-color: #e44;
+    color: #eee;
+    font-size: 1em;
+    border-radius: 5px;
+    height: 1.8em;
+    padding:3px 5px 0px px;
+    border: 1px dashed white;
+}
+
+#map-border a:hover {background-color: #f00;}
+#map-border a:active {background-color: #fbb;}
+#map-canvas {
+    height: 400px;
+    width: 100%;
+}
+
+.hotspot-search {
+    padding-left: 20px;
+    padding-left: 20px;
+    width: 400px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.hotspot-list {
+    width: 100%;
+    margin: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.hotspot-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    max-width: 50px;
+    max-height: 80px;
+}
+
+.ui-autocomplete {
+    background-color: #ddd;
+    color: #ddd;
+    width: 300px;
+    padding: 0px;
+    padding-left: 5px;
+    list-style: none;
+}
+.ui-autocomplete li:hover {
+    background-color: #ccc;
+}
+
+/*     Phone     */
+@media only screen and (max-device-width: 480px) {
+    body {background-color:#eee; padding-top:3.5em;}
+
+    .navbar-brand {
+        color: red !important;
+        font-size: 2em;
+    }
+
+    .navbar-toggle {
+        margin: 0px;
+        margin-top: 5px;
+        border: 0px;
+    }
+
+    #login-image {
+        height: 20px;
+    }
+
+    #map-canvas {
+        height: 5em;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+    }
+}
+
+/*     Desktop     */
+@media only screen and (min-device-width: 1001px) {
+    body {background-color: #888;}
+
+    #login {
+        display: inline;
+    }
+
+    #map-canvas {
+        margin: 0px;
+        padding: 0px;
+        height: 450px;
+        width: 75%;
+        display: inline-block;
+    }
+
+    .panel {
+        margin-bottom: 2px;
+    }
+
+    #sidebar {
+        display: inline-block;
+        width: 24.5%;
+        height: 440px;
+        float: right;
+        min-width: 100px;
+        border: 0px;
+    }
+
+    .hotspot {
+        vertical-align: top;
+        display: inline-block;
+        border: 1px brown dashed;
+        width: 95%;
+        min-width: 200px;
+        max-width: 24%;
+        margin: 5px;
+   }
+}
+
+/*     Tablet     */
+/*@media only screen and (min-device-width: 480px) and (max-device-width: 1000px) {
+    #device:after {content:"tablet";}
+
+    body {background-color: #aaa;}
+
+    #map-canvas {
+        height: 500px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+    }
+
+    .body-section {
+        display: inline-block;
+        border: 1px brown dashed;
+        width: 95%;
+        min-width: 200px;
+        max-width: 30%;
+        margin: 5px;
+   }
+}*/

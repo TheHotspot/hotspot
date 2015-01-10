@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+
+        <title>Hotspot | {% block title %}Home{% endblock title %}</title>
+
+        <link rel="stylesheet" href="static/common/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/common/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="static/web/css/style.css"/>
+
+        <script type="text/javascript" src="static/common/js/jquery.min.js"></script>
+        <script type="text/javascript" src="static/common/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="static/common/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="static/common/js/hotspot-api.js"></script>
+
+        {% block includes %}{% endblock includes %}
+    </head>
+    <body>
+        {{ analytics_code }}
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        {% if request.user.is_authenticated %}
+                            <img id="login-image" src="{{profile_img}}" alt="Logged in as {{user.get_full_name}}"/>
+                        {% else %}
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        {% endif %}
+                    </button>
+                    <a class="navbar-brand" href="/">HOTSPOT</a>
+                </div>
+                <a id="login" href="/auth/logout">
+                    <img id="login-image" src="{{profile_img}}" alt="Logged in as {{user.get_full_name}}"/>
+                </a>
+                <div class="navbar-collapse collapse in" style="height: auto;">
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if request.user.is_authenticated %}
+                            <li><a href="#">Settings</a></li>
+                            <li><a href="/api/history">History</a></li>
+                            <li><a href="/admin">Admin</a></li>
+                            <li><a href="/auth/social/connections/">Profile</a></li>
+                            <li><a href="/auth/logout">Log Out</a></li>
+                        {% else %}
+                            <li><a href="/auth/login">Log In</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="content" class="container-fluid">
+            {% block content %}{% endblock content %}
+        </div>
+    </body>
+</html>
